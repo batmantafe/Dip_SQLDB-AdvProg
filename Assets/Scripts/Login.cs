@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+public class Login : MonoBehaviour
 {
     public GameObject loginScreen, signUpScreen, forgotPasswordScreen;
 
