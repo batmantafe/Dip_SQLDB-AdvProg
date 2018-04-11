@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LoginMenu : MonoBehaviour
 {
-    public Text screen;
+    public Text screen, debug;
     public GameObject username, email, password, login, signup, forgotpassword, exit, send, confirm, back;
 
     // Use this for initialization
@@ -42,6 +42,8 @@ public class LoginMenu : MonoBehaviour
         send.SetActive(false);
         confirm.SetActive(false);
         back.SetActive(false);
+
+        debug.text = "";
     }
 
     public void SignUpButton()
@@ -65,6 +67,8 @@ public class LoginMenu : MonoBehaviour
         send.SetActive(false);
         confirm.SetActive(true);
         back.SetActive(true);
+
+        debug.text = "";
     }
 
     public void ForgotPasswordScreen()
@@ -88,6 +92,8 @@ public class LoginMenu : MonoBehaviour
         send.SetActive(true);
         confirm.SetActive(false);
         back.SetActive(true);
+
+        debug.text = "";
     }
 
     public void ExitButton()

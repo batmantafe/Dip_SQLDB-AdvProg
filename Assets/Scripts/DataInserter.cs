@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEngine.UI;
 
 public class DataInserter : MonoBehaviour
 {
     public InputField inputUsername, inputEmail, inputPassword;
-    
+
+    public Text debug;
+
     string CreateUserURL = "localhost/ninja/InsertUser.php";
     string LoginURL = "localhost/ninja/Login.php";
 
@@ -23,7 +26,7 @@ public class DataInserter : MonoBehaviour
     }
 
     #region Sign Up
-    public void CreateUser(string username, string email, string password)
+    IEnumerator CreateUser(string username, string email, string password)
     {
         // WWWForm: Send form to a PHP to trigger the PHP from Unity
         WWWForm form = new WWWForm();
@@ -33,11 +36,17 @@ public class DataInserter : MonoBehaviour
 
         // Connect to CreateUserURL and send "form" WWWForm (as "www" WWWForm) to it
         WWW www = new WWW(CreateUserURL, form);
+
+        yield return www;
+
+        Debug.Log(www.text);
+
+        debug.text = www.text;
     }
 
     public void CreateUser_ConfirmButton()
     {
-        CreateUser(inputUsername.text, inputEmail.text, inputPassword.text);
+        StartCoroutine(CreateUser(inputUsername.text, inputEmail.text, inputPassword.text));
     }
     #endregion
 
@@ -55,6 +64,8 @@ public class DataInserter : MonoBehaviour
 
         // This gets the "echo" from the PHP script
         Debug.Log(www.text);
+
+        debug.text = www.text;
     }
 
     public void Login_Button()
