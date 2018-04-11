@@ -73,7 +73,7 @@ public class LoginMenu : MonoBehaviour
 
     public void ForgotPasswordScreen()
     {
-        screen.text = "Forgot Password";
+        screen.text = "Reset Password";
 
         username.SetActive(false);
         username.gameObject.GetComponent<InputField>().text = "";
