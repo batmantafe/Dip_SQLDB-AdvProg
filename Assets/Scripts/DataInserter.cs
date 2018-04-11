@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class DataInserter : MonoBehaviour
 {
-    public string inputUsername;
-    public string inputEmail;
-    public string inputPassword;
+    public InputField inputUsername, inputEmail, inputPassword;
 
-    string CreateUserURL = "localhost/login/InsertUser.php";
+    /*public string inputUsername;
+    public string inputEmail;
+    public string inputPassword;*/
+
+    string CreateUserURL = "localhost/ninja/InsertUser.php";
 
     // Use this for initialization
     void Start()
@@ -20,10 +22,10 @@ public class DataInserter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             CreateUser(inputUsername, inputEmail, inputPassword);
-        }
+        }*/
     }
 
     public void CreateUser(string username, string email, string password)
@@ -34,7 +36,12 @@ public class DataInserter : MonoBehaviour
         form.AddField("emailPost", email);
         form.AddField("passwordPost", password);
 
-        // Connect to CreateUserURL and send "form" WWWForm to it
+        // Connect to CreateUserURL and send "form" WWWForm (as "www" WWWForm) to it
         WWW www = new WWW(CreateUserURL, form);
+    }
+
+    public void CreateUser_ConfirmButton()
+    {
+        CreateUser(inputUsername.text, inputEmail.text, inputPassword.text);
     }
 }
