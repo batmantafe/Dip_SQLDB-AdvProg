@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
-public class Login : MonoBehaviour
+public class LoginMenu : MonoBehaviour
 {
     public Text screen;
     public GameObject username, email, password, login, signup, forgotpassword, exit, send, confirm, back;
@@ -12,7 +12,7 @@ public class Login : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        LoginButton();
+        LoginBack();
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class Login : MonoBehaviour
 
     }
 
-    public void LoginButton()
+    public void LoginBack()
     {
         screen.text = "Login";
 
