@@ -7,58 +7,71 @@ using UnityEngine.UI;
 public class LoginMenu : MonoBehaviour
 {
     public Text screen, debugMsg;
-    public GameObject username, email, password, login, signup, forgotpassword, exit, send, confirm, back, logout;
+    public GameObject username, email, password, confirmPassword, login, signup, resetPassword, exit, send, confirm, back, logout;
 
-    public static bool UserLoggedIn;
+    public static bool userLoggedIn;
+    public static bool onLoginScreen;
 
     // Use this for initialization
     void Start()
     {
-        UserLoggedIn = false;
+        userLoggedIn = false;
+        onLoginScreen = true;
 
         Cursor.visible = true;
 
-        LoginBackLogout();
+        LoginScreen();
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckLoggedIn();
+        LoginScreen();
     }
 
-    public void LoginBackLogout()
+    public void LoginScreen()
     {
-        UserLoggedIn = false;
+        if (onLoginScreen == true)
+        {
+            userLoggedIn = false;
 
-        screen.text = "Login";
+            screen.text = "Login";
 
-        username.SetActive(true);
-        username.gameObject.GetComponent<InputField>().text = "";
+            username.SetActive(true);
+            //username.gameObject.GetComponent<InputField>().text = "";
 
-        email.SetActive(false);
-        email.gameObject.GetComponent<InputField>().text = "";
+            email.SetActive(false);
+            //email.gameObject.GetComponent<InputField>().text = "";
 
-        password.SetActive(true);
-        password.gameObject.GetComponent<InputField>().text = "";
+            password.SetActive(true);
+            //password.gameObject.GetComponent<InputField>().text = "";
 
-        login.SetActive(true);
-        signup.SetActive(true);
-        forgotpassword.SetActive(true);
-        exit.SetActive(true);
+            confirmPassword.SetActive(false);
+            //confirmPassword.gameObject.GetComponent<InputField>().text = "";
 
-        send.SetActive(false);
-        confirm.SetActive(false);
-        back.SetActive(false);
+            login.SetActive(true);
+            signup.SetActive(true);
+            resetPassword.SetActive(true);
+            exit.SetActive(true);
 
-        logout.SetActive(false);
+            send.SetActive(false);
+            confirm.SetActive(false);
+            back.SetActive(false);
 
-        debugMsg.text = "";
+            logout.SetActive(false);
+
+            if (debugMsg.text == "")
+            {
+                debugMsg.text = "";
+            }
+        }
     }
 
     public void SignUpButton()
     {
-        UserLoggedIn = false;
+        userLoggedIn = false;
+        onLoginScreen = false;
 
         screen.text = "Sign Up";
 
@@ -71,9 +84,12 @@ public class LoginMenu : MonoBehaviour
         password.SetActive(true);
         password.gameObject.GetComponent<InputField>().text = "";
 
+        confirmPassword.SetActive(true);
+        confirmPassword.gameObject.GetComponent<InputField>().text = "";
+
         login.SetActive(false);
         signup.SetActive(false);
-        forgotpassword.SetActive(false);
+        resetPassword.SetActive(false);
         exit.SetActive(false);
 
         send.SetActive(false);
@@ -87,7 +103,8 @@ public class LoginMenu : MonoBehaviour
 
     public void ForgotPasswordScreen()
     {
-        UserLoggedIn = false;
+        userLoggedIn = false;
+        onLoginScreen = false;
 
         screen.text = "Reset Password";
 
@@ -100,9 +117,12 @@ public class LoginMenu : MonoBehaviour
         password.SetActive(false);
         password.gameObject.GetComponent<InputField>().text = "";
 
+        confirmPassword.SetActive(false);
+        confirmPassword.gameObject.GetComponent<InputField>().text = "";
+
         login.SetActive(false);
         signup.SetActive(false);
-        forgotpassword.SetActive(false);
+        resetPassword.SetActive(false);
         exit.SetActive(false);
 
         send.SetActive(true);
@@ -116,15 +136,17 @@ public class LoginMenu : MonoBehaviour
 
     public void ExitButton()
     {
-        UserLoggedIn = false;
+        userLoggedIn = false;
 
         Application.Quit();
     }
 
     void CheckLoggedIn()
     {
-        if (UserLoggedIn == true)
+        if (userLoggedIn == true)
         {
+            onLoginScreen = false;
+
             screen.text = "Your Account";
 
             username.gameObject.GetComponent<InputField>().text = "";
@@ -135,11 +157,13 @@ public class LoginMenu : MonoBehaviour
             
             password.gameObject.GetComponent<InputField>().text = "";
             password.SetActive(false);
-            
+
+            confirmPassword.SetActive(false);
+            confirmPassword.gameObject.GetComponent<InputField>().text = "";
 
             login.SetActive(false);
             signup.SetActive(false);
-            forgotpassword.SetActive(false);
+            resetPassword.SetActive(false);
             exit.SetActive(false);
 
             send.SetActive(false);
@@ -147,8 +171,17 @@ public class LoginMenu : MonoBehaviour
             back.SetActive(false);
 
             logout.SetActive(true);
-
-            //debugMsg.text = "";
         }
+    }
+
+    public void BackLoginButton()
+    {
+        onLoginScreen = true;
+        userLoggedIn = false;
+
+        username.gameObject.GetComponent<InputField>().text = "";
+        email.gameObject.GetComponent<InputField>().text = "";
+        password.gameObject.GetComponent<InputField>().text = "";
+        confirmPassword.gameObject.GetComponent<InputField>().text = "";
     }
 }

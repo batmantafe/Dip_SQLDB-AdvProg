@@ -12,7 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 
 public class DataInserter : MonoBehaviour
 {
-    public InputField inputUsername, inputEmail, inputPassword;
+    public InputField inputUsername, inputEmail, inputPassword, inputConfirmPassword;
 
     public Text debugMsg;
     public string[] echoFromPhp;
@@ -48,13 +48,30 @@ public class DataInserter : MonoBehaviour
         yield return www;
 
         Debug.Log(www.text);
-
         debugMsg.text = www.text;
+
+        if (!www.text.Contains("ERROR"))
+        {
+            inputUsername.text = "";
+            inputEmail.text = "";
+            inputPassword.text = "";
+            inputConfirmPassword.text = "";
+
+            LoginMenu.onLoginScreen = true;
+        }
     }
 
     public void CreateUser_ConfirmButton()
     {
-        StartCoroutine(CreateUser(inputUsername.text, inputEmail.text, inputPassword.text));
+        if (inputPassword.text == inputConfirmPassword.text)
+        {
+            StartCoroutine(CreateUser(inputUsername.text, inputEmail.text, inputPassword.text));
+        }
+
+        if (inputPassword.text != inputConfirmPassword.text)
+        {
+            debugMsg.text = "ERROR: Passwords don't match.";
+        }
     }
     #endregion
 
@@ -75,7 +92,7 @@ public class DataInserter : MonoBehaviour
 
         if (echoFromPhp.Length == 2 && echoFromPhp[1] == "Logged in. ")
         {
-            LoginMenu.UserLoggedIn = true;
+            LoginMenu.userLoggedIn = true;
 
             debugMsg.text = echoFromPhp[0] + echoFromPhp[1];
         }
