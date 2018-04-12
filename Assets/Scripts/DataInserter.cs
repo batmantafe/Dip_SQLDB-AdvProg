@@ -15,7 +15,7 @@ public class DataInserter : MonoBehaviour
     public InputField inputUsername, inputEmail, inputPassword;
 
     public Text debugMsg;
-    public string[] debugPhp;
+    public string[] echoFromPhp;
 
     private string CreateUserURL = "localhost/ninja/InsertUser.php";
     private string LoginURL = "localhost/ninja/Login.php";
@@ -70,10 +70,21 @@ public class DataInserter : MonoBehaviour
         // Coroutine is used to wait for downloading of WWWForm to finish before running anything else;
         yield return www;
 
-        // This gets the "echo" from the PHP script
-        Debug.Log(www.text);
+        string wwwTextString = www.text;
+        echoFromPhp = wwwTextString.Split('|');
 
-        debugMsg.text = www.text;
+        if (echoFromPhp.Length == 2 && echoFromPhp[1] == "Logged in. ")
+        {
+            LoginMenu.UserLoggedIn = true;
+
+            debugMsg.text = echoFromPhp[0] + echoFromPhp[1];
+        }
+
+        else
+        {
+            Debug.Log(www.text);
+            debugMsg.text = www.text;
+        }
     }
 
     public void Login_Button()
@@ -94,9 +105,9 @@ public class DataInserter : MonoBehaviour
 
         // Email
         mail.From = new MailAddress("");
-        mail.To.Add(debugPhp[1]);
+        mail.To.Add(echoFromPhp[1]);
         mail.Subject = "Reset Your 99 NINJA Password";
-        mail.Body = "Hi " + debugPhp[2] + ", you can reset your Password HERE!";
+        mail.Body = "Hi " + echoFromPhp[2] + ", you can reset your Password HERE!";
 
         //Simple Mail Transfer Protocol
         SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
@@ -112,7 +123,7 @@ public class DataInserter : MonoBehaviour
 
         smtpServer.Send(mail);
 
-        debugMsg.text = debugPhp[0] + "Reset-Password Email sent to " + debugPhp[1];
+        debugMsg.text = echoFromPhp[0] + "Reset-Password Email sent to " + echoFromPhp[1];
     }
 
     IEnumerator CheckUserEmailExists(string email)
@@ -131,7 +142,7 @@ public class DataInserter : MonoBehaviour
             Debug.Log(www.text);
 
             string wwwTextString = www.text;
-            debugPhp = wwwTextString.Split('|');
+            echoFromPhp = wwwTextString.Split('|');
 
             SendUserEmail();
         }
