@@ -183,5 +183,7 @@ public class LoginMenu : MonoBehaviour
         email.gameObject.GetComponent<InputField>().text = "";
         password.gameObject.GetComponent<InputField>().text = "";
         confirmPassword.gameObject.GetComponent<InputField>().text = "";
+
+        debugMsg.text = "";
     }
 }
