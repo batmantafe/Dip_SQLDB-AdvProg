@@ -15,8 +15,7 @@ public class DataInserter : MonoBehaviour
     public InputField inputUsername, inputEmail, inputPassword;
 
     public Text debugMsg;
-
-    public bool emailIsCorrect;
+    public string[] debugPhp;
 
     private string CreateUserURL = "localhost/ninja/InsertUser.php";
     private string LoginURL = "localhost/ninja/Login.php";
@@ -25,7 +24,7 @@ public class DataInserter : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        emailIsCorrect = false;
+        
     }
 
     // Update is called once per frame
@@ -83,7 +82,7 @@ public class DataInserter : MonoBehaviour
     }
     #endregion
 
-    #region Email
+    #region Reset-Password Email
     public void EmailUserButton()
     {
         StartCoroutine(CheckUserEmailExists(inputEmail.text));
@@ -91,19 +90,18 @@ public class DataInserter : MonoBehaviour
 
     void SendUserEmail()
     {
-        debugMsg.text = "";
-
         MailMessage mail = new MailMessage();
 
         // Email
         mail.From = new MailAddress("");
-        mail.To.Add(inputEmail.text);
+        mail.To.Add(debugPhp[1]);
         mail.Subject = "Reset Your 99 NINJA Password";
-        mail.Body = "Hi User, you can reset your Password HERE:";
+        mail.Body = "Hi " + debugPhp[2] + ", you can reset your Password HERE!";
 
         //Simple Mail Transfer Protocol
         SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
         smtpServer.Port = 25;
+
         // Email, Password
         smtpServer.Credentials = new NetworkCredential("", "") as ICredentialsByHost;
         smtpServer.EnableSsl = true;
@@ -114,9 +112,7 @@ public class DataInserter : MonoBehaviour
 
         smtpServer.Send(mail);
 
-        debugMsg.text = "The Reset-Password Email has been sent to: " + inputEmail.text;
-
-        emailIsCorrect = false;
+        debugMsg.text = debugPhp[0] + "Reset-Password Email sent to " + debugPhp[1];
     }
 
     IEnumerator CheckUserEmailExists(string email)
@@ -129,13 +125,17 @@ public class DataInserter : MonoBehaviour
         // Coroutine is used to wait for downloading of WWWForm to finish before running anything else;
         yield return www;
 
-        if (www.text == "Connected. " + inputEmail.text)
+        // If "echo" from PHP script DOES NOT contain "Error"
+        if (!www.text.Contains("ERROR"))
         {
-            //Debug.Log("Connected. " + inputEmail.text);
-            //Debug.Log(www.text);
+            Debug.Log(www.text);
+
+            string wwwTextString = www.text;
+            debugPhp = wwwTextString.Split('|');
 
             SendUserEmail();
         }
+
         else
         {
             Debug.Log(www.text);
