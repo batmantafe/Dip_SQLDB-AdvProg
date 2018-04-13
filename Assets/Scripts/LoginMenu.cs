@@ -184,6 +184,14 @@ public class LoginMenu : MonoBehaviour
         password.gameObject.GetComponent<InputField>().text = "";
         confirmPassword.gameObject.GetComponent<InputField>().text = "";
 
-        debugMsg.text = "";
+        if (screen.text == "Your Account")
+        {
+            debugMsg.text = "You have logged out. ";
+        }
+
+        else
+        {
+            debugMsg.text = "You are not logged in. ";
+        }
     }
 }
