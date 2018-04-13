@@ -12,19 +12,24 @@ using System.Security.Cryptography.X509Certificates;
 
 public class DataInserter : MonoBehaviour
 {
-    public InputField inputUsername, inputEmail, inputPassword, inputConfirmPassword;
+    [Header("Input Fields")]
+    public InputField inputUsername;
+    public InputField inputEmail, inputPassword, inputConfirmPassword, inputChgPwdEmail, inputChgPwdCurrPwd, inputChgPwdNewPwd, inputChgPwdConfPwd;
 
+    [Header("PHP Echoes")]
     public Text debugMsg;
     public string[] echoFromPhp;
 
-    private int codeLength = 10;
+    [Header("Random Code")]
     public string code;
     public string codeCharactersList = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+    private int codeLength = 10;
     private string CreateUserURL = "localhost/ninja/InsertUser.php";
     private string LoginURL = "localhost/ninja/Login.php";
     private string CheckEmailURL = "localhost/ninja/CheckEmail.php";
     private string UpdateCodeURL = "localhost/ninja/UpdateCode.php";
+    private string UpdatePasswordURL = "localhost/ninja/UpdatePassword.php";
 
     // Use this for initialization
     void Start()
@@ -167,7 +172,7 @@ public class DataInserter : MonoBehaviour
         mail.From = new MailAddress("");
         mail.To.Add(echoFromPhp[1]);
         mail.Subject = "Reset Your 99 NINJA Password";
-        mail.Body = "Hi " + echoFromPhp[2] + ", your Password has been reset to: " + code + ". You can use this Password to Login. You can Change this Password in Your Account. Best Regards, 99 Ninja!";
+        mail.Body = "Hi " + echoFromPhp[2] + ", your Password has been reset to: " + code + ". You can use this Password to Login OR you can Change this Password. Best Regards, 99 Ninja!";
 
         //Simple Mail Transfer Protocol
         SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
@@ -213,6 +218,40 @@ public class DataInserter : MonoBehaviour
         yield return www;
 
         Debug.Log(www.text);
+    }
+    #endregion
+
+    #region Change Password
+    public void ChangePassword_Button()
+    {
+        if (inputChgPwdNewPwd.text == inputChgPwdConfPwd.text)
+        {
+            StartCoroutine(ChangePasswordUpdate(inputChgPwdEmail.text, inputChgPwdCurrPwd.text, inputChgPwdNewPwd.text));
+        }
+
+        else
+        {
+            debugMsg.text = "ERROR: New Passwords don't match. ";
+        }
+    }
+
+    IEnumerator ChangePasswordUpdate(string email, string currPw, string newPw)
+    {
+        WWWForm form = new WWWForm();
+
+        form.AddField("emailPost", email);
+        form.AddField("currentPasswordPost", currPw);
+        form.AddField("newPasswordPost", newPw);
+
+        WWW www = new WWW(UpdatePasswordURL, form);
+
+        yield return www;
+
+        Debug.Log(www.text);
+
+        debugMsg.text = www.text;
+
+        LoginMenu.onLoginScreen = true;
     }
     #endregion
 }

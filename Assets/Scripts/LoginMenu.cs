@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class LoginMenu : MonoBehaviour
 {
-    public Text screen, debugMsg;
-    public GameObject username, email, password, confirmPassword, login, signup, resetPassword, exit, send, confirm, back, logout;
+    [Header("Menu GameObjects")]
+    public Text screen;
+    public Text debugMsg;
+    public GameObject username, email, password, confirmPassword, login, signup, resetPassword, exit, send, confirm, back, logout, chgPwdMenu;
 
+    [Header("Static Bools")]
     public static bool userLoggedIn;
     public static bool onLoginScreen;
 
@@ -20,6 +23,7 @@ public class LoginMenu : MonoBehaviour
 
         Cursor.visible = true;
 
+        // Default starting screen
         LoginScreen();
     }
 
@@ -30,6 +34,7 @@ public class LoginMenu : MonoBehaviour
         LoginScreen();
     }
 
+    #region Login Screen
     public void LoginScreen()
     {
         if (onLoginScreen == true)
@@ -61,19 +66,23 @@ public class LoginMenu : MonoBehaviour
 
             logout.SetActive(false);
 
+            chgPwdMenu.SetActive(false);
+
             if (debugMsg.text == "")
             {
                 debugMsg.text = "";
             }
         }
     }
+    #endregion
 
+    #region Create Account Screen
     public void SignUpButton()
     {
         userLoggedIn = false;
         onLoginScreen = false;
 
-        screen.text = "Sign Up";
+        screen.text = "Create Account";
 
         username.SetActive(true);
         username.gameObject.GetComponent<InputField>().text = "";
@@ -98,15 +107,19 @@ public class LoginMenu : MonoBehaviour
 
         logout.SetActive(false);
 
+        chgPwdMenu.SetActive(false);
+
         debugMsg.text = "";
     }
+    #endregion
 
+    #region Forgot Account Screen
     public void ForgotPasswordScreen()
     {
         userLoggedIn = false;
         onLoginScreen = false;
 
-        screen.text = "Reset Password";
+        screen.text = "Forgot Account";
 
         username.SetActive(false);
         username.gameObject.GetComponent<InputField>().text = "";
@@ -131,16 +144,45 @@ public class LoginMenu : MonoBehaviour
 
         logout.SetActive(false);
 
+        chgPwdMenu.SetActive(true);
+
         debugMsg.text = "";
     }
+    #endregion
 
+    #region Exit Button
     public void ExitButton()
     {
         userLoggedIn = false;
 
         Application.Quit();
     }
+    #endregion
 
+    #region Back Button
+    public void BackLoginButton()
+    {
+        onLoginScreen = true;
+        userLoggedIn = false;
+
+        username.gameObject.GetComponent<InputField>().text = "";
+        email.gameObject.GetComponent<InputField>().text = "";
+        password.gameObject.GetComponent<InputField>().text = "";
+        confirmPassword.gameObject.GetComponent<InputField>().text = "";
+
+        if (screen.text == "Your Account")
+        {
+            debugMsg.text = "You have logged out. ";
+        }
+
+        else
+        {
+            debugMsg.text = "You are not logged in. ";
+        }
+    }
+    #endregion
+
+    #region Check if User is Logged In, then show Your Account screen, otherwise go to Login Screen
     void CheckLoggedIn()
     {
         if (userLoggedIn == true)
@@ -171,27 +213,9 @@ public class LoginMenu : MonoBehaviour
             back.SetActive(false);
 
             logout.SetActive(true);
+
+            chgPwdMenu.SetActive(false);
         }
     }
-
-    public void BackLoginButton()
-    {
-        onLoginScreen = true;
-        userLoggedIn = false;
-
-        username.gameObject.GetComponent<InputField>().text = "";
-        email.gameObject.GetComponent<InputField>().text = "";
-        password.gameObject.GetComponent<InputField>().text = "";
-        confirmPassword.gameObject.GetComponent<InputField>().text = "";
-
-        if (screen.text == "Your Account")
-        {
-            debugMsg.text = "You have logged out. ";
-        }
-
-        else
-        {
-            debugMsg.text = "You are not logged in. ";
-        }
-    }
+    #endregion
 }
