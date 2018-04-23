@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LoginMenu : MonoBehaviour
 {
     [Header("Menu GameObjects")]
     public Text screen;
     public Text debugMsg;
-    public GameObject username, email, password, confirmPassword, login, signup, resetPassword, exit, send, confirm, back, logout, chgPwdMenu;
+    public GameObject username, email, password, confirmPassword, login, signup, resetPassword, exit, send, confirm, back, logout, chgPwdMenu, playButton;
 
     [Header("Static Bools")]
     public static bool userLoggedIn;
@@ -68,6 +69,8 @@ public class LoginMenu : MonoBehaviour
 
             chgPwdMenu.SetActive(false);
 
+            playButton.SetActive(false);
+
             if (debugMsg.text == "")
             {
                 debugMsg.text = "";
@@ -109,6 +112,8 @@ public class LoginMenu : MonoBehaviour
 
         chgPwdMenu.SetActive(false);
 
+        playButton.SetActive(false);
+
         debugMsg.text = "";
     }
     #endregion
@@ -145,6 +150,8 @@ public class LoginMenu : MonoBehaviour
         logout.SetActive(false);
 
         chgPwdMenu.SetActive(true);
+
+        playButton.SetActive(false);
 
         debugMsg.text = "";
     }
@@ -215,7 +222,14 @@ public class LoginMenu : MonoBehaviour
             logout.SetActive(true);
 
             chgPwdMenu.SetActive(false);
+
+            playButton.SetActive(true);
         }
     }
     #endregion
+
+    public void PlayButton()
+    {
+        SceneManager.LoadScene("Game");
+    }
 }
