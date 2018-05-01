@@ -16,6 +16,9 @@ public class LoginMenu : MonoBehaviour
     public static bool userLoggedIn;
     public static bool onLoginScreen;
 
+    [Header("Audio")]
+    public AudioSource ding;
+
     // Use this for initialization
     void Start()
     {
@@ -79,9 +82,11 @@ public class LoginMenu : MonoBehaviour
     }
     #endregion
 
-    #region Create Account Screen
+    #region Create Account Screen (Sign Up Button)
     public void SignUpButton()
     {
+        ding.Play();
+
         userLoggedIn = false;
         onLoginScreen = false;
 
@@ -118,9 +123,11 @@ public class LoginMenu : MonoBehaviour
     }
     #endregion
 
-    #region Forgot Account Screen
+    #region Forgot Account Screen (Forgot Account Button)
     public void ForgotPasswordScreen()
     {
+        ding.Play();
+
         userLoggedIn = false;
         onLoginScreen = false;
 
@@ -160,6 +167,8 @@ public class LoginMenu : MonoBehaviour
     #region Exit Button
     public void ExitButton()
     {
+        ding.Play();
+
         userLoggedIn = false;
 
         Application.Quit();
@@ -169,6 +178,8 @@ public class LoginMenu : MonoBehaviour
     #region Back Button
     public void BackLoginButton()
     {
+        ding.Play();
+
         onLoginScreen = true;
         userLoggedIn = false;
 
@@ -230,6 +241,8 @@ public class LoginMenu : MonoBehaviour
 
     public void PlayButton()
     {
+        ding.Play();
+
         SceneManager.LoadScene("Game");
     }
 }

@@ -31,6 +31,9 @@ public class DataInserter : MonoBehaviour
     private string UpdateCodeURL = "localhost/ninja/UpdateCode.php";
     private string UpdatePasswordURL = "localhost/ninja/UpdatePassword.php";
 
+    [Header("Audio")]
+    public AudioSource ding;
+
     // Use this for initialization
     void Start()
     {
@@ -73,6 +76,8 @@ public class DataInserter : MonoBehaviour
 
     public void CreateUser_ConfirmButton()
     {
+        ding.Play();
+
         if (inputPassword.text == inputConfirmPassword.text)
         {
             StartCoroutine(CreateUser(inputUsername.text, inputEmail.text, inputPassword.text));
@@ -116,6 +121,8 @@ public class DataInserter : MonoBehaviour
 
     public void Login_Button()
     {
+        ding.Play();
+
         StartCoroutine(LoginUser(inputUsername.text, inputPassword.text));
     }
     #endregion
@@ -123,6 +130,8 @@ public class DataInserter : MonoBehaviour
     #region Reset-Password Email
     public void EmailUserButton()
     {
+        ding.Play();
+
         StartCoroutine(CheckUserEmailExists(inputEmail.text));
     }
 
@@ -224,6 +233,8 @@ public class DataInserter : MonoBehaviour
     #region Change Password
     public void ChangePassword_Button()
     {
+        ding.Play();
+
         if (inputChgPwdNewPwd.text == inputChgPwdConfPwd.text)
         {
             StartCoroutine(ChangePasswordUpdate(inputChgPwdEmail.text, inputChgPwdCurrPwd.text, inputChgPwdNewPwd.text));
