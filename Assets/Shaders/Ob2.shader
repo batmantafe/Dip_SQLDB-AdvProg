@@ -1,14 +1,19 @@
 ﻿// Location of Shader in Material Inspector
 Shader "Duane's Shaders/Object Shader 2" {
+// What does this Object Shader do?
+// 1. Red value of texture can be adjusted using Slider.
+// 2. 
+// 3. 
+	
 	/*******************************************************************************************/
 	// Used by Unity3D to give access from the inspector to the hidden variables within a shader.
 	// These variables still need to be defined in the SubShader section.
 	Properties{
-		_Colour("Colour", Color) = (50,1,1,1)
+		//_Colour("Colour", Color) = (50,1,1,1)
 
 		_Tex("Texture", 2D) = "white" {}
 
-		_RedRange("Red Range", Range(-0.8,0.8)) = 0
+		_Intensity("Red Value", Range(-1,7.5)) = 1
 
 		_Cube("Cube", CUBE) = "" {}
 	}
@@ -45,8 +50,9 @@ Shader "Duane's Shaders/Object Shader 2" {
 	};
 
 	// To access Properties created (type, name)
+	//float4 _Colour;
 	sampler2D _Tex;
-	half _RedRange;
+	half _Intensity;
 	samplerCUBE _Cube;
 
 	// vertex2fragment Function vert, taking in Input struct data
@@ -60,17 +66,20 @@ Shader "Duane's Shaders/Object Shader 2" {
 		// output UV is uv from Input struct
 		o.uv = IN.uv;
 
-
 		return o;
 	}
 
 	// fragment Function, taking in v2f data above
 	fixed4 frag(v2f IN) : SV_Target{
 
+		// variable texColour to be returned = Texture
 		float4 texColour = tex2D(_Tex, IN.uv);
 
-		// add tint Red value of texture by RedRange value
-		return texColour.r + _RedRange;
+		// Red value of Texture = Red value of Texture * Intensity Range slider
+		texColour.r = texColour.r * _Intensity;
+
+		// output texColour result from Function
+		return texColour;
 	}
 
 		// Shader Function
