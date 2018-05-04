@@ -1,9 +1,9 @@
 ﻿// Location of Shader in Material Inspector
-Shader "Duane's Shaders/Object Shader 2" {
+Shader "Duane's Shaders/Object Shader" {
 // What does this Object Shader do?
 // 1. Red value of Texture can be adjusted using "Red Value" range slider.
 // 2. Alpha value of Texture "fades" in and out, based on "Alpha" range.
-// 3. 
+// 3. The Normals of the Object can be moved inward or outward using the "Move Normals" range slider.
 	
 	/*******************************************************************************************/
 	// Used by Unity3D to give access from the inspector to the hidden variables within a shader.
@@ -14,9 +14,13 @@ Shader "Duane's Shaders/Object Shader 2" {
 
 		_Intensity("Red Value", Range(-1,7.5)) = 1
 
-		_Alpha("Alpha", Range(0,1)) = 1
+		[HideInInspector] _Alpha("Alpha", Range(0,1)) = 1
 
-		_Cube("Cube", CUBE) = "" {}
+		_MoveNormals("Move Normals", Range(-0.25,1)) = 0
+
+		//_RampTex("Ramp", 2D) = "white" {}
+
+		//_Cube("Cube", CUBE) = "" {}
 	}
 		/*******************************************************/
 
@@ -57,6 +61,7 @@ Shader "Duane's Shaders/Object Shader 2" {
 	struct Input {
 		float2 uv :TEXCOORD0;
 		float4 vertex : POSITION;
+		float3 normal : NORMAL;
 	};
 
 	// Input that will pass from Vert to Frag
@@ -71,12 +76,17 @@ Shader "Duane's Shaders/Object Shader 2" {
 
 	half _Alpha;
 
-	samplerCUBE _Cube;
+	half _MoveNormals;
+
+	//samplerCUBE _Cube;
 
 	// vertex2fragment Function vert, taking in Input struct data
 	v2f vert(Input IN) {
 
 		v2f o;
+
+		// Move faces (vertex positions?) based on MoveNormals range
+		IN.vertex.xyz += IN.normal.xyz * _MoveNormals;
 
 		// get Model/View/Projection
 		o.position = mul(UNITY_MATRIX_MVP, IN.vertex);
@@ -99,7 +109,7 @@ Shader "Duane's Shaders/Object Shader 2" {
 		// UNITY_OPAQUE_ALPHA(texColour.a);
 
 		// Alpha of Texture = current Alpha of Texture * _Alpha range * sin * double-time
-		texColour.a = texColour.a * _Alpha * sin(_Time.z);
+		texColour.a = texColour.a * _Alpha * sin(_Time.y);
 
 		// output texColour result from Function
 		return texColour;
@@ -122,9 +132,14 @@ Shader "Duane's Shaders/Object Shader 2" {
 	}
 
 		/****SURFACE SHADER HERE*****/
-		/*CGPROGRAM
+		
+		/*#pragma surface surf Toon
+		CGPROGRAM
+		sampler2D _RampTex;
+
 
 		ENDCG*/
+	
 
 	}
 		/************************************************************************/
