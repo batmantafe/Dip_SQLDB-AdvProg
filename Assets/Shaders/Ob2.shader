@@ -2,7 +2,7 @@
 Shader "Duane's Shaders/Object Shader 2" {
 // What does this Object Shader do?
 // 1. Red value of Texture can be adjusted using "Red Value" range slider.
-// 2. 
+// 2. Alpha value of Texture "fades" in and out.
 // 3. 
 	
 	/*******************************************************************************************/
@@ -14,6 +14,8 @@ Shader "Duane's Shaders/Object Shader 2" {
 
 		_Intensity("Red Value", Range(-1,7.5)) = 1
 
+		_Alpha("Alpha", Range(0,1)) = 1
+
 		_Cube("Cube", CUBE) = "" {}
 	}
 		/*******************************************************/
@@ -22,8 +24,16 @@ Shader "Duane's Shaders/Object Shader 2" {
 			// Processing
 		SubShader{
 
+		// Basic Alpha Blending...
+		// SrcAlpha: The value of this stage is multiplied by the source alpha value.
+		// OneMinusSrcAlpha: The value of this stage is multiplied by (1 - source alpha).
+		Blend SrcAlpha OneMinusSrcAlpha
+
+		/******VERTEX AND FRAGMENT SHADER HERE******/
 		Pass{
-		Tags{ "RenderType" = "Opaque" }
+		//Tags{ "RenderType" = "Opaque" }
+		Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+
 
 		CGPROGRAM // Start High-Level Shader Language
 
@@ -34,6 +44,7 @@ Shader "Duane's Shaders/Object Shader 2" {
 #pragma vertex vert
 #pragma fragment frag
 
+// Helper functions and macros
 #include "UnityCG.cginc"
 
 
@@ -43,6 +54,7 @@ Shader "Duane's Shaders/Object Shader 2" {
 		float4 vertex : POSITION;
 	};
 
+	// Input that will pass from Vert to Frag
 	struct v2f {
 		float4 position : POSITION;
 		float2 uv : TEXCOORD0;
@@ -51,6 +63,8 @@ Shader "Duane's Shaders/Object Shader 2" {
 	// To access Properties created (type, name)
 	sampler2D _Tex;
 	half _Intensity;
+
+	half _Alpha;
 
 	samplerCUBE _Cube;
 
@@ -77,6 +91,11 @@ Shader "Duane's Shaders/Object Shader 2" {
 		// Red value of Texture = Red value of Texture * Intensity Range slider
 		texColour.r = texColour.r * _Intensity; //* sin(_Time.y));
 
+		// UNITY_OPAQUE_ALPHA(texColour.a);
+
+		// Alpha of Texture = current Alpha of Texture * _Alpha range * sin * double-time
+		texColour.a = texColour.a * _Alpha * sin(_Time.z);
+
 		// output texColour result from Function
 		return texColour;
 	}
@@ -96,6 +115,11 @@ Shader "Duane's Shaders/Object Shader 2" {
 
 		ENDCG // End High-Level Shader Language
 	}
+
+		/****SURFACE SHADER HERE*****/
+		/*CGPROGRAM
+
+		ENDCG*/
 
 	}
 		/************************************************************************/
