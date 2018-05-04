@@ -1,7 +1,7 @@
 ﻿// Location of Shader in Material Inspector
 Shader "Duane's Shaders/Object Shader 2" {
 // What does this Object Shader do?
-// 1. Red value of texture can be adjusted using Slider.
+// 1. Red value of Texture can be adjusted using "Red Value" range slider.
 // 2. 
 // 3. 
 	
@@ -9,7 +9,6 @@ Shader "Duane's Shaders/Object Shader 2" {
 	// Used by Unity3D to give access from the inspector to the hidden variables within a shader.
 	// These variables still need to be defined in the SubShader section.
 	Properties{
-		//_Colour("Colour", Color) = (50,1,1,1)
 
 		_Tex("Texture", 2D) = "white" {}
 
@@ -50,9 +49,9 @@ Shader "Duane's Shaders/Object Shader 2" {
 	};
 
 	// To access Properties created (type, name)
-	//float4 _Colour;
 	sampler2D _Tex;
 	half _Intensity;
+
 	samplerCUBE _Cube;
 
 	// vertex2fragment Function vert, taking in Input struct data
@@ -76,7 +75,7 @@ Shader "Duane's Shaders/Object Shader 2" {
 		float4 texColour = tex2D(_Tex, IN.uv);
 
 		// Red value of Texture = Red value of Texture * Intensity Range slider
-		texColour.r = texColour.r * _Intensity;
+		texColour.r = texColour.r * _Intensity; //* sin(_Time.y));
 
 		// output texColour result from Function
 		return texColour;
