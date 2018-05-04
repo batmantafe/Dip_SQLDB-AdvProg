@@ -2,7 +2,7 @@
 Shader "Duane's Shaders/Object Shader 2" {
 // What does this Object Shader do?
 // 1. Red value of Texture can be adjusted using "Red Value" range slider.
-// 2. Alpha value of Texture "fades" in and out.
+// 2. Alpha value of Texture "fades" in and out, based on "Alpha" range.
 // 3. 
 	
 	/*******************************************************************************************/
@@ -27,13 +27,18 @@ Shader "Duane's Shaders/Object Shader 2" {
 		// Basic Alpha Blending...
 		// SrcAlpha: The value of this stage is multiplied by the source alpha value.
 		// OneMinusSrcAlpha: The value of this stage is multiplied by (1 - source alpha).
+		//Cull Off
+		//ZWrite On
+		//Lighting Off
 		Blend SrcAlpha OneMinusSrcAlpha
+		//ZTest Off
+		
 
 		/******VERTEX AND FRAGMENT SHADER HERE******/
 		Pass{
 		//Tags{ "RenderType" = "Opaque" }
 		Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
-
+		//Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
 
 		CGPROGRAM // Start High-Level Shader Language
 
