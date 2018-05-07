@@ -36,6 +36,16 @@ public class LoginMenu : MonoBehaviour
     {
         CheckLoggedIn();
         LoginScreen();
+
+        // Debugging/Playtesting: Toggle userLoggedIn
+        if(Input.GetKeyDown(KeyCode.F12))
+        {
+            userLoggedIn = !userLoggedIn;
+            onLoginScreen = !onLoginScreen;
+
+            Debug.Log("userLoggedIn = " + userLoggedIn);
+            Debug.Log("onLoginScreen = " + onLoginScreen);
+        }
     }
 
     #region Login Screen
