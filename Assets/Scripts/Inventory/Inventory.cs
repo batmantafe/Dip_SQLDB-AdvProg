@@ -31,9 +31,9 @@ public class Inventory : MonoBehaviour
             // fullscreen Inventory background
             //GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "INVENTORY");
 
-            GUI.Box(new Rect(scrW * 1f, scrH * 1.5f, scrW * 1f, scrH * 5f), "Equipped");
+            GUI.Box(new Rect(scrW * 4.5f, scrH * 1f, scrW * 1f, scrH * 5f), "Equipped");
 
-            GUI.Box(new Rect(scrW * 2.5f, scrH * 2f, scrW * 3f, scrH * 4f), "Character View");
+            GUI.Box(new Rect(scrW * 1f, scrH * 2f, scrW * 3f, scrH * 4f), "Character View");
 
             GUI.Box(new Rect(scrW * 6f, scrH * 1f, scrW * 5f, scrH * 5f), "Inventory");
 
