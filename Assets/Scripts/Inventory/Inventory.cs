@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class Inventory : MonoBehaviour
 {
     [Header("Bools")]
@@ -9,14 +11,18 @@ public class Inventory : MonoBehaviour
     public bool playerAtShop;
     public bool playerAtChest;
 
+    [Header("Scripts")]
     public MouseLook playerHeadLook;
     public MouseLook playerTurn;
     public Movement playerMove;
 
+    public string shopString;
+    public string chestString;
+
     // Use this for initialization
     void Start()
     {
-        GetStuff();
+        SetupStuff();
     }
 
     // Update is called once per frame
@@ -28,6 +34,16 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    void SetupStuff()
+    {
+        playerHeadLook = transform.Find("Head").GetComponent<MouseLook>();
+        playerTurn = GetComponent<MouseLook>();
+        playerMove = GetComponent<Movement>();
+
+        shopString = "Press TAB to access the Shop";
+        chestString = "Press TAB to access this Chest";
+    }
+
     void OnGUI()
     {
         float scrW = Screen.width / 16;
@@ -37,8 +53,23 @@ public class Inventory : MonoBehaviour
         {
             DrawInventories();
         }
+
+        // Let the Player know to press Tab
+        else
+        {
+            if (playerAtShop == true)
+            {
+                GUI.Label(new Rect(scrW * 7f, scrH * 4f, scrW * 4f, scrH * 1f), shopString);
+            }
+
+            if (playerAtChest == true)
+            {
+                GUI.Label(new Rect(scrW * 7f, scrH * 4f, scrW * 4f, scrH * 1f), chestString);
+            }
+        }
     }
 
+    #region Inventory
     public bool ToggleInv()
     {
         // if showInv is True, then turn off Inventory
@@ -98,13 +129,7 @@ public class Inventory : MonoBehaviour
             GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 3f), "Chest");
         }
     }
-
-    void GetStuff()
-    {
-        playerHeadLook = transform.Find("Head").GetComponent<MouseLook>();
-        playerTurn = GetComponent<MouseLook>();
-        playerMove = GetComponent<Movement>();
-    }
+    #endregion
 
     #region Triggers
     void OnTriggerEnter (Collider other)
