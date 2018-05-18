@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
 
     [Header("GameObjects")]
     public GameObject miniMap;
+    public GameObject charView;
 
     // Use this for initialization
     void Start()
@@ -92,6 +93,7 @@ public class Inventory : MonoBehaviour
             playerMove.enabled = true;
 
             miniMap.SetActive(true);
+            charView.SetActive(false);
 
             GetComponent<HUD>().hudCheckInvOn = false;
 
@@ -111,6 +113,7 @@ public class Inventory : MonoBehaviour
             playerMove.enabled = false;
 
             miniMap.SetActive(false);
+            charView.SetActive(true);
 
             GetComponent<HUD>().hudCheckInvOn = true;
 
