@@ -16,8 +16,12 @@ public class Inventory : MonoBehaviour
     public MouseLook playerTurn;
     public Movement playerMove;
 
+    [Header("Strings")]
     public string shopString;
     public string chestString;
+
+    [Header("Ints")]
+    public int thisChestMaxItems;
 
     // Use this for initialization
     void Start()
@@ -121,12 +125,25 @@ public class Inventory : MonoBehaviour
 
         if (playerAtShop == true)
         {
-            GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 3f), "Shop");
+            GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 7f), "Shop");
         }
 
         if (playerAtChest == true)
         {
-            GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 3f), "Chest");
+            if (thisChestMaxItems <= 3)
+            {
+                GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 1f), "Small Chest");
+            }
+
+            if (thisChestMaxItems >= 7)
+            {
+                GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 3f), "Big Chest");
+            }
+
+            if (thisChestMaxItems >= 4 && thisChestMaxItems <= 6)
+            {
+                GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 2f), "Average Chest");
+            }
         }
     }
     #endregion
@@ -142,6 +159,11 @@ public class Inventory : MonoBehaviour
         if (other.gameObject.CompareTag("Chest"))
         {
             playerAtChest = true;
+
+            thisChestMaxItems = other.gameObject.transform.parent.gameObject.GetComponent<Chest>().chestMaxItems;
+
+            // What is Max Items for this Chest set at?
+            // Debug.Log(other.gameObject.transform.parent.gameObject.GetComponent<Chest>().chestMaxItems);
         }
     }
 
