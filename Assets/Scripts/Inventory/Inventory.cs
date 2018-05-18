@@ -23,6 +23,9 @@ public class Inventory : MonoBehaviour
     [Header("Ints")]
     public int thisChestMaxItems;
 
+    [Header("GameObjects")]
+    public GameObject miniMap;
+
     // Use this for initialization
     void Start()
     {
@@ -88,6 +91,8 @@ public class Inventory : MonoBehaviour
             playerTurn.enabled = true;
             playerMove.enabled = true;
 
+            miniMap.SetActive(true);
+
             return (false);
         }
 
@@ -102,6 +107,8 @@ public class Inventory : MonoBehaviour
             playerHeadLook.enabled = false;
             playerTurn.enabled = false;
             playerMove.enabled = false;
+
+            miniMap.SetActive(false);
 
             return (true);
         }
