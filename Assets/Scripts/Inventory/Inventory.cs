@@ -93,6 +93,8 @@ public class Inventory : MonoBehaviour
 
             miniMap.SetActive(true);
 
+            GetComponent<HUD>().hudCheckInvOn = false;
+
             return (false);
         }
 
@@ -109,6 +111,8 @@ public class Inventory : MonoBehaviour
             playerMove.enabled = false;
 
             miniMap.SetActive(false);
+
+            GetComponent<HUD>().hudCheckInvOn = true;
 
             return (true);
         }
@@ -139,7 +143,7 @@ public class Inventory : MonoBehaviour
         {
             if (thisChestMaxItems <= 3)
             {
-                GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 1f), "Small Chest");
+                GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 1f), "Little Chest");
             }
 
             if (thisChestMaxItems >= 7)

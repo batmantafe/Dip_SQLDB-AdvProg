@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HUD : MonoBehaviour
 {
-    public bool InvOn;
+    public bool hudCheckInvOn;
 
     [Header("Health")]
     public float healthMax;
@@ -52,8 +52,6 @@ public class HUD : MonoBehaviour
         stamRegen = 5f;
         playerNormalSpeed = GetComponent<Movement>().speed;
         playerSlowSpeed = 1f;
-
-        InvOn = GetComponent<Inventory>().showInv;
     }
 
     void OnGUI()
@@ -61,13 +59,22 @@ public class HUD : MonoBehaviour
         float scrW = Screen.width / 16;
         float scrH = Screen.height / 9;
 
-        if (InvOn == false)
+        if (hudCheckInvOn == false)
         {
             GUI.Box(new Rect(scrW * 6f, scrH * 7f, healthCurrent * (scrW * 4f) / healthMax, scrH * 0.5f), "Health", healthGui);
 
             GUI.Box(new Rect(scrW * 6f, scrH * 7.5f, manaCurrent * (scrW * 4f) / manaMax, scrH * 0.5f), "Mana", manaGui);
 
             GUI.Box(new Rect(scrW * 6f, scrH * 8f, stamCurrent * (scrW * 4f) / stamMax, scrH * 0.5f), "Stamina", stamGui);
+        }
+
+        if (hudCheckInvOn == true)
+        {
+            GUI.Box(new Rect(scrW * 1f, scrH * 6.25f, healthCurrent * (scrW * 3f) / healthMax, scrH * 0.25f), "Health", healthGui);
+
+            GUI.Box(new Rect(scrW * 1f, scrH * 6.5f, manaCurrent * (scrW * 3f) / manaMax, scrH * 0.25f), "Mana", manaGui);
+
+            GUI.Box(new Rect(scrW * 1f, scrH * 6.75f, stamCurrent * (scrW * 3f) / stamMax, scrH * 0.25f), "Stamina", stamGui);
         }
     }
 
