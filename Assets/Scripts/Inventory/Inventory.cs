@@ -95,7 +95,7 @@ public class Inventory : MonoBehaviour
 
         if (playerAtChest == true)
         {
-            GUI.Box(new Rect(scrW * 12f, scrH * 4.5f, scrW * 3f, scrH * 3f), "Chest");
+            GUI.Box(new Rect(scrW * 12f, scrH * 1f, scrW * 3f, scrH * 3f), "Chest");
         }
     }
 
@@ -113,6 +113,11 @@ public class Inventory : MonoBehaviour
         {
             playerAtShop = true;
         }
+
+        if (other.gameObject.CompareTag("Chest"))
+        {
+            playerAtChest = true;
+        }
     }
 
     void OnTriggerExit (Collider other)
@@ -120,6 +125,11 @@ public class Inventory : MonoBehaviour
         if (other.gameObject.CompareTag("Shop"))
         {
             playerAtShop = false;
+        }
+
+        if (other.gameObject.CompareTag("Chest"))
+        {
+            playerAtChest = false;
         }
     }
     #endregion
