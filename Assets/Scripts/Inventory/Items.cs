@@ -1,19 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Items : MonoBehaviour
+public class Items
 {
+    public int id { get; set; }
 
-    // Use this for initialization
-    void Start()
+    public string name { get; set; }
+
+    public Texture2D iconName { get; set; }
+
+    public GameObject meshName { get; set; }
+}
+
+public class Weapon : Items
+{
+    public int clipSize { get; set; }
+
+    public int damage { get; set; }
+
+    public float fireRate { get; set; }
+
+    public float weaponRange { get; set; }
+
+    public string ammoType { get; set; }
+
+    public Weapon(int id, string name, int clipSize, int damage, float fireRate,
+                    float weaponRange, string ammoType, string iconName, string meshName)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        this.id = id;
+        this.name = name;
+        this.clipSize = clipSize;
+        this.damage = damage;
+        this.fireRate = fireRate;
+        this.weaponRange = weaponRange;
+        this.ammoType = ammoType;
+        this.iconName = Resources.Load("Icons/" + iconName) as Texture2D;
+        this.meshName = Resources.Load("Prefabs/" + meshName) as GameObject;
     }
 }

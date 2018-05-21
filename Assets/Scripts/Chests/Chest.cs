@@ -10,6 +10,8 @@ public class Chest : MonoBehaviour
     [Header("Arrays")]
     public GameObject[] cans;
 
+    public List<Items> currentChestItems;
+
     // Use this for initialization
     void Start()
     {
@@ -28,5 +30,10 @@ public class Chest : MonoBehaviour
         {
             cans[can].SetActive(true);
         }
+    }
+
+    void GenerateChestItems()
+    {
+
     }
 }
