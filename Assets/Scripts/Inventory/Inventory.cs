@@ -85,7 +85,7 @@ public class Inventory : MonoBehaviour
     }
 
     #region AddItem
-    public void AddItem(int iD)
+    /*public void AddItem(int iD)
     {
         for (int i = 0; i < inventory.Count; i++)
         {
@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
-    }
+    }*/
     #endregion
 
     #region Inventory
