@@ -8,7 +8,8 @@ public class SQL_Inventory : MonoBehaviour
     public bool loaded;
     public Vector2 scr;
     public List<Items> item;
-    public Dictionary<int, Weapon> weapons = new Dictionary<int, Weapon>();
+    //public Dictionary<int, Weapon> weapons = new Dictionary<int, Weapon>();
+    public Dictionary<int, ItemInfo> itemsList = new Dictionary<int, ItemInfo>();
 
     // Use this for initialization
     void Start()
@@ -49,11 +50,16 @@ public class SQL_Inventory : MonoBehaviour
         {
             string[] current = itemList[i].Split('|');
 
-            Weapon weapon = new Weapon(int.Parse(current[0]), current[1], int.Parse(current[2]), int.Parse(current[3]), float.Parse(current[4]),
+            ItemInfo thisItem = new ItemInfo(int.Parse(current[0]), current[1], int.Parse(current[2]), int.Parse(current[3]), float.Parse(current[4]), current[5], current[6]);
+
+            itemsList.Add(i, thisItem);
+            Debug.Log(itemsList[i].name);
+
+            /*Weapon weapon = new Weapon(int.Parse(current[0]), current[1], int.Parse(current[2]), int.Parse(current[3]), float.Parse(current[4]),
                                         float.Parse(current[5]), current[6], current[7], current[8]);
 
             weapons.Add(i, weapon);
-            Debug.Log(weapons[i].name);
+            Debug.Log(weapons[i].name);*/
         }
 
         loaded = true;
