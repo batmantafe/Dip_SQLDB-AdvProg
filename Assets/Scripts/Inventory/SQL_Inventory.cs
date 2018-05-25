@@ -8,8 +8,9 @@ public class SQL_Inventory : MonoBehaviour
     public bool loaded;
     public Vector2 scr;
     public List<Items> item;
-    //public Dictionary<int, Weapon> weapons = new Dictionary<int, Weapon>();
     public Dictionary<int, ItemInfo> itemsList = new Dictionary<int, ItemInfo>();
+
+    //public Dictionary<int, Weapon> weapons = new Dictionary<int, Weapon>();
 
     // Use this for initialization
     void Start()

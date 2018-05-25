@@ -27,20 +27,18 @@ public class Inventory : MonoBehaviour
     public GameObject miniMap;
     public GameObject charView;
 
-    [Header("Cert IV Inventory")]
-    public List<int> inventory = new List<int>();
-    public int slotX, slotY;
-    private Rect inventorySize;
-
-    //the toggle for showing our inventory
-    //public bool showInv;
+    [Header("Player Inventory")]
+    public List<int> playerInventory = new List<int>();
+    public IconsList iconsListFromGameManager;
+    public float slotX, slotY;
+    public GameObject gameManager;
 
     // Use this for initialization
     void Start()
     {
         SetupStuff();
 
-        
+        playerInventory.Add(1);
     }
 
     // Update is called once per frame
@@ -49,11 +47,6 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleInv();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            inventory.Add(1);
         }
     }
 
@@ -65,6 +58,11 @@ public class Inventory : MonoBehaviour
 
         shopString = "Press TAB to access the Shop";
         chestString = "Press TAB to access this Chest";
+
+        slotX = 6f;
+        slotY = 1f;
+
+        iconsListFromGameManager = gameManager.GetComponent<IconsList>();
     }
 
     void OnGUI()
@@ -92,25 +90,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    #region AddItem
-    /*public void AddItem(int iD)
-    {
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i].name == null)
-            {
-                //inventory[i] = Items.CreateItem(iD);
-                Debug.Log("Added Item: " + inventory[i].name);
-                return;
-            }
-        }
-    }*/
-    #endregion
-
     #region Inventory
     public bool ToggleInv()
     {
-        // if showInv is True, then turn off Inventory
+        // if showInv is True, then make showInv False
         if (showInv)
         {
             showInv = false;
@@ -130,7 +113,7 @@ public class Inventory : MonoBehaviour
             return (false);
         }
 
-        // if showInv is False, then turn on Inventory
+        // if showInv is False, then make showInv True
         else
         {
             showInv = true;
@@ -156,119 +139,31 @@ public class Inventory : MonoBehaviour
         float scrW = Screen.width / 16;
         float scrH = Screen.height / 9;
 
-        // fullscreen Inventory background
-        //GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "INVENTORY");
-
         //GUI.Box(new Rect(scrW * 4.5f, scrH * 1f, scrW * 1f, scrH * 5f), "Equipped");
 
         GUI.Box(new Rect(scrW * 1f, scrH * 2f, scrW * 3f, scrH * 4f), "Character View");
 
         GUI.Box(new Rect(scrW * 6f, scrH * 1f, scrW * 5f, scrH * 5f), "Inventory");
 
-        //GUI.Box(new Rect(scrW * 6f, scrH * 6.5f, scrW * 5f, scrH * 1f), "Quick Select");
-
-        /***********************************/
-
-        #region DragInventory from Cert IV
-
-        //void InventoryDrag(int windowID)
-    //{
-            //GUI.Box(new Rect(0, 0.25f * scrH, 6 * scrW, 0.5f * scrH), "Banner");
-            //GUI.Box(new Rect(0, 4.25f * scrH, 6 * scrW, 0.5f * scrH), "Gold n EXP");
-            //showToolTip = false;
-            #region Nested For Loop
-            Event e = Event.current;
-            int i = 0;
-            for (int y = 0; y < slotY; y++)
+        if (playerInventory.Count >= 1)
+        {
+            for (int i = 0; i < playerInventory.Count; i++)
             {
-                for (int x = 0; x < slotX; x++)
-                {
-                    Rect slotLocation = new Rect(scrW * 0.125f + x * (scrW * 0.75f), scrH * 0.75f + y * (scrH * 0.65f), 0.75f * scrW, 0.65f * scrH);
-                    GUI.Box(slotLocation, "");
+                Debug.Log(i);
 
-                    #region Pickup Item
-                    /*
-                    if (e.button == 0 && e.type == EventType.MouseDown && slotLocation.Contains(e.mousePosition) && !dragging && inventory[i].Name != null && !Input.GetKey(KeyCode.LeftShift))
-                    {
-                        draggedItem = inventory[i];//we pick up item
-                        inventory[i] = new Item();//the slot item is now blank
-                        dragging = true;//we are holding an item
-                        draggedFrom = i;//this is so we know where the item came from
-                        Debug.Log("Dragging: "+ draggedItem.Name);
-                    }
-                    #endregion
-                    #region Swap Item
-                    if (e.button == 0 && e.type == EventType.MouseUp && slotLocation.Contains(e.mousePosition) && dragging && inventory[i].Name != null)
-                    {
-                        Debug.Log("Swapping: " + draggedItem.Name + " :With: " + inventory[i].Name);
+                int iconID = playerInventory[i] - 1;
 
-                        inventory[draggedFrom] = inventory[i];//our pick up slot now has our other item
-                        inventory[i] = draggedItem;//the slot we are dropping the Item is now filled with our drag item
-                        draggedItem = new Item();//the item we use to be dragging is empty
-                        dragging = false;//we are not holding an item
+                Debug.Log(iconID);
 
-                    }
-                    #endregion
-                    #region Place Item
-                    if (e.button == 0 && e.type == EventType.MouseUp && slotLocation.Contains(e.mousePosition) && dragging && inventory[i].Name == null)
-                    {
-                        Debug.Log("Place: " + draggedItem.Name + " :Into: " + i);
+                GUI.DrawTexture(new Rect(scrW * slotX, scrH * slotY, scrW, scrH), iconsListFromGameManager.iconsArray[iconID]);
 
-                        inventory[i] = draggedItem;//the slot we are dropping the Item is now filled with our drag item
-                        draggedItem = new Item();//the item we use to be dragging is empty
-                        dragging = false;//we are not holding an item
+                Debug.Log("playInv = " + playerInventory[i]);
+                Debug.Log("iconsArr = " + iconsListFromGameManager.iconsArray[iconID]);
 
-                    }
-                    #endregion
-                    #region Return Item
-                    if (e.button == 0 && e.type == EventType.MouseUp && i == ((slotX*slotY)-1) && dragging)
-                    {
-                        Debug.Log("Return: " + draggedItem.Name + " :Into: " + draggedFrom);
-
-                        inventory[draggedFrom] = draggedItem;//the slot we are dropping the Item is now filled with our drag item
-                        draggedItem = new Item();//the item we use to be dragging is empty
-                        dragging = false;//we are not holding an item
-
-                    }
-                    */
-                    #endregion
-
-
-                    #region Draw Item Icon
-                    /*if (inventory[i].name != null)
-                    {
-                        GUI.DrawTexture(slotLocation, inventory[i].iconName);
-
-                        Debug.Log("Draw Item Icon");
-
-                        #region Set ToolTip on Mouse Hover
-                        if (slotLocation.Contains(e.mousePosition) /*&& !dragging*/ /*&& showInv)
-                        {
-                            //toolTipItem = i;
-                            //showToolTip = true;
-                        }
-                        #endregion
-                    }*/
-                    #endregion
-                    i++;
-                }
             }
-            #endregion
-            
-            
-            #region Drag Window
-            /*
-            GUI.DragWindow(new Rect(0 * scrW, 0 * scrH, 6 * scrW, 0.5f * scrH));//Top Drag
-            GUI.DragWindow(new Rect(0 * scrW, 0.5f * scrH, 0.25f * scrW, 3.5f * scrH));//Left Drag
-            GUI.DragWindow(new Rect(5.5f * scrW, 0.5f * scrH, 0.25f * scrW, 3.5f * scrH));//Right Drag
-            GUI.DragWindow(new Rect(0 * scrW, 4 * scrH, 0.25f * scrW, 3.5f * scrH));//Bottom Drag
-            */
-            #endregion
-        //}
+        }
 
-        #endregion
-
-        /***********************************/
+        //GUI.Box(new Rect(scrW * 6f, scrH * 6.5f, scrW * 5f, scrH * 1f), "Quick Select");
 
         if (playerAtShop == true)
         {
@@ -296,7 +191,7 @@ public class Inventory : MonoBehaviour
     #endregion
 
     #region Triggers
-    void OnTriggerEnter (Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Shop"))
         {
@@ -314,7 +209,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void OnTriggerExit (Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Shop"))
         {
