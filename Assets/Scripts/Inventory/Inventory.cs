@@ -28,16 +28,19 @@ public class Inventory : MonoBehaviour
     public GameObject charView;
 
     [Header("Cert IV Inventory")]
-    //the toggle for showing our inventory
-    //public bool showInv;
-    public List<Items> inventory = new List<Items>();
+    public List<int> inventory = new List<int>();
     public int slotX, slotY;
     private Rect inventorySize;
+
+    //the toggle for showing our inventory
+    //public bool showInv;
 
     // Use this for initialization
     void Start()
     {
         SetupStuff();
+
+        
     }
 
     // Update is called once per frame
@@ -46,6 +49,11 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleInv();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            inventory.Add(1);
         }
     }
 
@@ -91,7 +99,7 @@ public class Inventory : MonoBehaviour
         {
             if (inventory[i].name == null)
             {
-                inventory[i] = ItemGen.CreateItem(iD);
+                //inventory[i] = Items.CreateItem(iD);
                 Debug.Log("Added Item: " + inventory[i].name);
                 return;
             }
@@ -151,13 +159,13 @@ public class Inventory : MonoBehaviour
         // fullscreen Inventory background
         //GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "INVENTORY");
 
-        GUI.Box(new Rect(scrW * 4.5f, scrH * 1f, scrW * 1f, scrH * 5f), "Equipped");
+        //GUI.Box(new Rect(scrW * 4.5f, scrH * 1f, scrW * 1f, scrH * 5f), "Equipped");
 
         GUI.Box(new Rect(scrW * 1f, scrH * 2f, scrW * 3f, scrH * 4f), "Character View");
 
         GUI.Box(new Rect(scrW * 6f, scrH * 1f, scrW * 5f, scrH * 5f), "Inventory");
 
-        GUI.Box(new Rect(scrW * 6f, scrH * 6.5f, scrW * 5f, scrH * 1f), "Quick Select");
+        //GUI.Box(new Rect(scrW * 6f, scrH * 6.5f, scrW * 5f, scrH * 1f), "Quick Select");
 
         /***********************************/
 
@@ -227,20 +235,20 @@ public class Inventory : MonoBehaviour
 
 
                     #region Draw Item Icon
-                    if (inventory[i].name != null)
+                    /*if (inventory[i].name != null)
                     {
                         GUI.DrawTexture(slotLocation, inventory[i].iconName);
 
                         Debug.Log("Draw Item Icon");
 
                         #region Set ToolTip on Mouse Hover
-                        if (slotLocation.Contains(e.mousePosition) /*&& !dragging*/ && showInv)
+                        if (slotLocation.Contains(e.mousePosition) /*&& !dragging*/ /*&& showInv)
                         {
                             //toolTipItem = i;
                             //showToolTip = true;
                         }
                         #endregion
-                    }
+                    }*/
                     #endregion
                     i++;
                 }
