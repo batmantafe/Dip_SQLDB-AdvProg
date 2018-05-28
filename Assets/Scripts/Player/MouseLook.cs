@@ -45,7 +45,7 @@ public class MouseLook : MonoBehaviour
             GetComponent<Rigidbody>().freezeRotation = true;
         }
 
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
     #endregion
     #region Update
