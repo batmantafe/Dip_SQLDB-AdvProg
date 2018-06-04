@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IconsList : MonoBehaviour
 {
-    public Texture[] iconsArray;
+    public Sprite[] iconsArray;
 
     // Use this for initialization
     void Start()

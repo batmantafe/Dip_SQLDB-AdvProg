@@ -13,7 +13,9 @@ public class Inventory2 : MonoBehaviour
 
     public GameObject[] itemButtonsArray;
 
-    public int itemNumber;
+    public int itemNumber, itemInArray;
+
+    public IconsList iconPics;
 
     // Use this for initialization
     void Start()
@@ -21,10 +23,10 @@ public class Inventory2 : MonoBehaviour
         StartConditions();
 
         itemButtonsArray[0].GetComponent<ItemButton>().itemPresent = true;
-        itemButtonsArray[0].GetComponent<ItemButton>().itemNumber = 10;
+        itemButtonsArray[0].GetComponent<ItemButton>().itemNumber = 0;
 
         itemButtonsArray[1].GetComponent<ItemButton>().itemPresent = true;
-        itemButtonsArray[1].GetComponent<ItemButton>().itemNumber = 10;
+        itemButtonsArray[1].GetComponent<ItemButton>().itemNumber = 0;
     }
 
     // Update is called once per frame
@@ -39,13 +41,45 @@ public class Inventory2 : MonoBehaviour
                 if (itemButtonsArray[i].GetComponent<ItemButton>().itemPresent == false)
                 {
                     itemButtonsArray[i].GetComponent<ItemButton>().itemPresent = true;
-                    itemButtonsArray[i].GetComponent<ItemButton>().itemNumber = 10;
+                    itemButtonsArray[i].GetComponent<ItemButton>().itemNumber = 0;
 
                     CheckInventoryButtons();
 
                     return;
                 }
             }            
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            for (int i = 0; i < itemButtonsArray.Length; i++)
+            {
+                if (itemButtonsArray[i].GetComponent<ItemButton>().itemPresent == false)
+                {
+                    itemButtonsArray[i].GetComponent<ItemButton>().itemPresent = true;
+                    itemButtonsArray[i].GetComponent<ItemButton>().itemNumber = 1;
+
+                    CheckInventoryButtons();
+
+                    return;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            for (int i = 0; i < itemButtonsArray.Length; i++)
+            {
+                if (itemButtonsArray[i].GetComponent<ItemButton>().itemPresent == false)
+                {
+                    itemButtonsArray[i].GetComponent<ItemButton>().itemPresent = true;
+                    itemButtonsArray[i].GetComponent<ItemButton>().itemNumber = 2;
+
+                    CheckInventoryButtons();
+
+                    return;
+                }
+            }
         }
     }
 
@@ -101,7 +135,35 @@ public class Inventory2 : MonoBehaviour
             else
             { 
                 itemButtonsArray[i].SetActive(true);
+
+                itemInArray = i;
+
+                ItemPictures();
             }
+        }
+    }
+
+    void ItemPictures()
+    {
+        switch (itemButtonsArray[itemInArray].GetComponent<ItemButton>().itemNumber)
+        {
+            case 0:
+
+                itemButtonsArray[itemInArray].GetComponent<Image>().sprite = iconPics.iconsArray[0];
+
+                break;
+
+            case 1:
+
+                itemButtonsArray[itemInArray].GetComponent<Image>().sprite = iconPics.iconsArray[1];
+
+                break;
+
+            case 2:
+
+                itemButtonsArray[itemInArray].GetComponent<Image>().sprite = iconPics.iconsArray[2];
+
+                break;
         }
     }
 }

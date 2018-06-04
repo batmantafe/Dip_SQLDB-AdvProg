@@ -155,7 +155,7 @@ public class Inventory : MonoBehaviour
 
                 Debug.Log(iconID);
 
-                GUI.DrawTexture(new Rect(scrW * slotX, scrH * slotY, scrW, scrH), iconsListFromGameManager.iconsArray[iconID]);
+                //GUI.DrawTexture(new Rect(scrW * slotX, scrH * slotY, scrW, scrH), iconsListFromGameManager.iconsArray[iconID]);
 
                 Debug.Log("playInv = " + playerInventory[i]);
                 Debug.Log("iconsArr = " + iconsListFromGameManager.iconsArray[iconID]);
