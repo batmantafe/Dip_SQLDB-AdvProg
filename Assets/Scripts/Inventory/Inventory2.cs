@@ -11,7 +11,7 @@ public class Inventory2 : MonoBehaviour
     public MouseLook playerXLook, playerYLook;
     public Movement playerMovement;
 
-    public GameObject[] itemButtons;
+    public GameObject[] itemButtonsArray;
 
     public int itemNumber;
 
@@ -19,12 +19,34 @@ public class Inventory2 : MonoBehaviour
     void Start()
     {
         StartConditions();
+
+        itemButtonsArray[0].GetComponent<ItemButton>().itemPresent = true;
+        itemButtonsArray[0].GetComponent<ItemButton>().itemNumber = 10;
+
+        itemButtonsArray[1].GetComponent<ItemButton>().itemPresent = true;
+        itemButtonsArray[1].GetComponent<ItemButton>().itemNumber = 10;
     }
 
     // Update is called once per frame
     void Update()
     {
         InventoryInput();
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            for (int i = 0; i < itemButtonsArray.Length; i++)
+            {
+                if (itemButtonsArray[i].GetComponent<ItemButton>().itemPresent == false)
+                {
+                    itemButtonsArray[i].GetComponent<ItemButton>().itemPresent = true;
+                    itemButtonsArray[i].GetComponent<ItemButton>().itemNumber = 10;
+
+                    CheckInventoryButtons();
+
+                    return;
+                }
+            }            
+        }
     }
 
     void StartConditions()
@@ -69,11 +91,16 @@ public class Inventory2 : MonoBehaviour
 
     void CheckInventoryButtons()
     {
-        for (int i = 0; i < itemButtons.Length; i++)
+        for (int i = 0; i < itemButtonsArray.Length; i++)
         {
-            if (itemButtons[i].GetComponent<ItemButton>().itemPresent == false)
+            if (itemButtonsArray[i].GetComponent<ItemButton>().itemPresent == false)
             {
-                itemButtons[i].SetActive(false);
+                itemButtonsArray[i].SetActive(false);
+            }
+
+            else
+            { 
+                itemButtonsArray[i].SetActive(true);
             }
         }
     }
