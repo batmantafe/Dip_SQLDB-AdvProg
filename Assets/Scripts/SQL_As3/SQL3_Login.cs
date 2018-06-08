@@ -21,7 +21,7 @@ namespace sql3
         public string checkUsernameURL = "localhost/ninja/sql3CheckUsername.php";
 
         [Header("PHP Echo")]
-        public string[] phpEcho;
+        public string[] charClassArray;
 
         [Header("Character Buttons")]
         public GameObject char1;
@@ -71,6 +71,8 @@ namespace sql3
                     movement.enabled = true;
                     hud.enabled = true;
                 }
+
+                usernameInput.gameObject.SetActive(false);
             }
         }
 
@@ -97,7 +99,7 @@ namespace sql3
                 Debug.Log(www.text);
 
                 string wwwTextString = www.text;
-                phpEcho = wwwTextString.Split('|');
+                charClassArray = wwwTextString.Split('|');
 
                 /*if (phpEcho[0] == "")
                 {
@@ -120,9 +122,23 @@ namespace sql3
         #region Check Character stuff
         void SetButtonsToCharacter()
         {
-            char1.GetComponentInChildren<Text>().text = phpEcho[1] + " the " + phpEcho[2];
-            char2.GetComponentInChildren<Text>().text = phpEcho[3] + " the " + phpEcho[4];
-            char3.GetComponentInChildren<Text>().text = phpEcho[5] + " the " + phpEcho[6];
+            if (charClassArray.Length == 3)
+            {
+                char1.GetComponentInChildren<Text>().text = charClassArray[1] + " the " + charClassArray[2];
+            }
+
+            if (charClassArray.Length == 5)
+            {
+                char1.GetComponentInChildren<Text>().text = charClassArray[1] + " the " + charClassArray[2];
+                char2.GetComponentInChildren<Text>().text = charClassArray[3] + " the " + charClassArray[4];
+            }
+
+            if (charClassArray.Length == 7)
+            {
+                char1.GetComponentInChildren<Text>().text = charClassArray[1] + " the " + charClassArray[2];
+                char2.GetComponentInChildren<Text>().text = charClassArray[3] + " the " + charClassArray[4];
+                char3.GetComponentInChildren<Text>().text = charClassArray[5] + " the " + charClassArray[6];
+            }
         }
 
 
