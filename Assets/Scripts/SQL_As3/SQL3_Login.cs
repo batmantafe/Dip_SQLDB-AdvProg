@@ -18,12 +18,21 @@ namespace sql3
 
         [Header("Username SQL Check")]
         public InputField usernameInput;
-        private string checkUsernameURL = "localhost/ninja/sql3CheckUsername.php";
+        public string checkUsernameURL = "localhost/ninja/sql3CheckUsername.php";
+
+        [Header("PHP Echo")]
+        public string[] phpEcho;
+
+        [Header("Character Buttons")]
+        public GameObject char1;
+        public GameObject char2, char3;
+        public bool charChosen;
 
         // Use this for initialization
         void Start()
         {
             userLoggedIn = false;
+            charChosen = false;
         }
 
         // Update is called once per frame
@@ -43,20 +52,31 @@ namespace sql3
                 mouseLookY.enabled = false;
                 movement.enabled = false;
                 hud.enabled = false;
+
+                char1.SetActive(false);
+                char2.SetActive(false);
+                char3.SetActive(false);
             }
 
             else
             {
-                mouseLookX.enabled = true;
-                mouseLookY.enabled = true;
-                movement.enabled = true;
-                hud.enabled = true;
+                char1.SetActive(true);
+                char2.SetActive(true);
+                char3.SetActive(true);
+
+                if (charChosen)
+                {
+                    mouseLookX.enabled = true;
+                    mouseLookY.enabled = true;
+                    movement.enabled = true;
+                    hud.enabled = true;
+                }
             }
         }
 
         void CheckUsername()
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 StartCoroutine(CheckUsernameNow(usernameInput.text));
             }
@@ -77,6 +97,16 @@ namespace sql3
                 Debug.Log(www.text);
 
                 string wwwTextString = www.text;
+                phpEcho = wwwTextString.Split('|');
+
+                /*if (phpEcho[0] == "")
+                {
+                    Debug.Log("It's NOT null! It's NOT a Space! But it's DEFINITELY got a value!");
+                }*/
+
+                userLoggedIn = true;
+
+                SetButtonsToCharacter();
             }
 
             // If ERROR from SQL
@@ -85,6 +115,16 @@ namespace sql3
                 Debug.Log(www.text);
             }
         }
+        #endregion
+
+        #region Check Character stuff
+        void SetButtonsToCharacter()
+        {
+            char1.GetComponentInChildren<Text>().text = phpEcho[1] + " the " + phpEcho[2];
+            char2.GetComponentInChildren<Text>().text = phpEcho[3] + " the " + phpEcho[4];
+            char3.GetComponentInChildren<Text>().text = phpEcho[5] + " the " + phpEcho[6];
+        }
+
 
         #endregion
     }
