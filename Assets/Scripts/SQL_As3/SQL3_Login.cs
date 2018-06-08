@@ -27,6 +27,7 @@ namespace sql3
         public GameObject char1;
         public GameObject char2, char3;
         public bool charChosen;
+        public Text playerTalk;
 
         // Use this for initialization
         void Start()
@@ -122,26 +123,48 @@ namespace sql3
         #region Check Character stuff
         void SetButtonsToCharacter()
         {
-            if (charClassArray.Length == 3)
+            if (charClassArray.Length > 1)
             {
                 char1.GetComponentInChildren<Text>().text = charClassArray[1] + " the " + charClassArray[2];
+
+                char1.GetComponent<CharButtons>().charNameInButton = charClassArray[1];
+                char1.GetComponent<CharButtons>().charClassInButton = charClassArray[2];
             }
 
-            if (charClassArray.Length == 5)
+            if (charClassArray.Length > 3)
             {
-                char1.GetComponentInChildren<Text>().text = charClassArray[1] + " the " + charClassArray[2];
                 char2.GetComponentInChildren<Text>().text = charClassArray[3] + " the " + charClassArray[4];
+
+                char2.GetComponent<CharButtons>().charNameInButton = charClassArray[3];
+                char2.GetComponent<CharButtons>().charClassInButton = charClassArray[4];
             }
 
-            if (charClassArray.Length == 7)
+            if (charClassArray.Length > 5)
             {
-                char1.GetComponentInChildren<Text>().text = charClassArray[1] + " the " + charClassArray[2];
-                char2.GetComponentInChildren<Text>().text = charClassArray[3] + " the " + charClassArray[4];
                 char3.GetComponentInChildren<Text>().text = charClassArray[5] + " the " + charClassArray[6];
+
+                char3.GetComponent<CharButtons>().charNameInButton = charClassArray[5];
+                char3.GetComponent<CharButtons>().charClassInButton = charClassArray[6];
             }
         }
 
+        public void ClickCharButton()
+        {
+            if (gameObject.name.Contains("Char1"))
+            {
+                playerTalk.text = "You are " + char1.GetComponent<CharButtons>().charNameInButton + ", a " + char1.GetComponent<CharButtons>().charClassInButton + ".";
+            }
 
+            if (gameObject.name.Contains("Char2"))
+            {
+                playerTalk.text = "You are " + char2.GetComponent<CharButtons>().charNameInButton + ", a " + char2.GetComponent<CharButtons>().charClassInButton + ".";
+            }
+
+            if (gameObject.name.Contains("Char3"))
+            {
+                playerTalk.text = "You are " + char3.GetComponent<CharButtons>().charNameInButton + ", a " + char3.GetComponent<CharButtons>().charClassInButton + ".";
+            }
+        }
         #endregion
     }
 

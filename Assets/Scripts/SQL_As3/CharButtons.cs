@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 namespace sql3
 {
     public class CharButtons : MonoBehaviour
     {
         public string charNameInButton;
         public string charClassInButton;
-        public bool charButtonActive;
+        public bool charButtonClicked;
 
         // Use this for initialization
         void Start()
