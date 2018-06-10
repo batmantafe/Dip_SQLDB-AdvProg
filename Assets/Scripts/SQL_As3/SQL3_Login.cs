@@ -29,6 +29,7 @@ namespace sql3
         public GameObject char2, char3;
         public bool charChosen;
         public string charChoice;
+        public Text classTalk;
 
         // Use this for initialization
         void Start()
@@ -87,14 +88,20 @@ namespace sql3
                     {
                         case "Warrior":
                             hud.playerIsWarrior = true;
+
+                            classTalk.text = "A Warrior has lots of Health, very little Mana, and some Stamina.";
                             break;
 
                         case "Wizard":
                             hud.playerIsWizard = true;
+
+                            classTalk.text = "A Wizard has some Health, lots of Mana, and very little Stamina.";
                             break;
 
                         case "Rogue":
                             hud.playerIsRogue = true;
+
+                            classTalk.text = "A Rogue has very little Health, some Mana, and lots of Stamina.";
                             break;
                     }
                 }
