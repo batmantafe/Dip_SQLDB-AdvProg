@@ -28,6 +28,7 @@ namespace sql3
         public GameObject char1;
         public GameObject char2, char3;
         public bool charChosen;
+        public string charChoice;
 
         // Use this for initialization
         void Start()
@@ -81,6 +82,21 @@ namespace sql3
                     char1.SetActive(false);
                     char2.SetActive(false);
                     char3.SetActive(false);
+
+                    switch (charChoice)
+                    {
+                        case "Warrior":
+                            hud.playerIsWarrior = true;
+                            break;
+
+                        case "Wizard":
+                            hud.playerIsWizard = true;
+                            break;
+
+                        case "Rogue":
+                            hud.playerIsRogue = true;
+                            break;
+                    }
                 }
             }
         }
@@ -158,10 +174,24 @@ namespace sql3
 
         void CheckCharChosen()
         {
-            if (char1.GetComponent<CharButtons>().charButtonClicked == true ||
-                char2.GetComponent<CharButtons>().charButtonClicked == true ||
-                char3.GetComponent<CharButtons>().charButtonClicked == true)
+            if (char1.GetComponent<CharButtons>().charButtonClicked == true)
             {
+                charChoice = char1.GetComponent<CharButtons>().charClassInButton;
+
+                charChosen = true;
+            }
+
+            if (char2.GetComponent<CharButtons>().charButtonClicked == true)
+            {
+                charChoice = char2.GetComponent<CharButtons>().charClassInButton;
+
+                charChosen = true;
+            }
+
+            if (char3.GetComponent<CharButtons>().charButtonClicked == true)
+            {
+                charChoice = char3.GetComponent<CharButtons>().charClassInButton;
+
                 charChosen = true;
             }
         }

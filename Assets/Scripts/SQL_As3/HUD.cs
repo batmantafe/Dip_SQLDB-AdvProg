@@ -28,6 +28,10 @@ namespace sql3
         public float playerNormalSpeed;
         public float playerSlowSpeed;
 
+        [Header("Class Choice Stats")]
+        public float highStat, medStat, lowStat;
+        public bool playerIsWarrior, playerIsWizard, playerIsRogue, playerClassSet;
+
         // Use this for initialization
         void Start()
         {
@@ -37,19 +41,75 @@ namespace sql3
         // Update is called once per frame
         void Update()
         {
+            if (playerIsWarrior)
+            {
+                healthMax = highStat;
+                manaMax = lowStat;
+                stamMax = medStat;
+
+                if (!playerClassSet)
+                {
+                    healthCurrent = healthMax;
+                    manaCurrent = manaMax;
+                    stamCurrent = stamMax;
+
+                    playerClassSet = true;
+                }
+            }
+
+            if (playerIsWizard)
+            {
+                healthMax = medStat;
+                manaMax = highStat;
+                stamMax = lowStat;
+
+                if (!playerClassSet)
+                {
+                    healthCurrent = healthMax;
+                    manaCurrent = manaMax;
+                    stamCurrent = stamMax;
+
+                    playerClassSet = true;
+                }
+            }
+
+            if (playerIsRogue)
+            {
+                healthMax = lowStat;
+                manaMax = medStat;
+                stamMax = highStat;
+
+                if (!playerClassSet)
+                {
+                    healthCurrent = healthMax;
+                    manaCurrent = manaMax;
+                    stamCurrent = stamMax;
+
+                    playerClassSet = true;
+                }
+            }
+
             StaminaUse();
+
+            
         }
 
         void StartConditions()
         {
+            highStat = 200;
+            medStat = 100;
+            lowStat = 50;
+
+            
+
             // Set Health
-            healthMax = 100f;
+            //healthMax = 100f;
             healthCurrent = healthMax;
 
-            manaMax = 100f;
+            //manaMax = 100f;
             manaCurrent = manaMax;
 
-            stamMax = 100f;
+            //stamMax = 100f;
             stamCurrent = stamMax;
             stamBurn = 10f;
             stamRegen = 5f;
@@ -73,11 +133,11 @@ namespace sql3
 
             if (hudCheckInvOn == true)
             {
-                GUI.Box(new Rect(scrW * 1f, scrH * 6.25f, healthCurrent * (scrW * 3f) / healthMax, scrH * 0.25f), "Health", healthGui);
+                GUI.Box(new Rect(scrW * 1f, scrH * 6.25f, healthCurrent * (scrW * 3f) / healthMax, scrH * 0.25f), "Health: ", healthGui);
 
-                GUI.Box(new Rect(scrW * 1f, scrH * 6.5f, manaCurrent * (scrW * 3f) / manaMax, scrH * 0.25f), "Mana", manaGui);
+                GUI.Box(new Rect(scrW * 1f, scrH * 6.5f, manaCurrent * (scrW * 3f) / manaMax, scrH * 0.25f), "Mana: ", manaGui);
 
-                GUI.Box(new Rect(scrW * 1f, scrH * 6.75f, stamCurrent * (scrW * 3f) / stamMax, scrH * 0.25f), "Stamina", stamGui);
+                GUI.Box(new Rect(scrW * 1f, scrH * 6.75f, stamCurrent * (scrW * 3f) / stamMax, scrH * 0.25f), "Stamina: ", stamGui);
             }
         }
 

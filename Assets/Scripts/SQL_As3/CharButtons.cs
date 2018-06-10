@@ -14,6 +14,8 @@ namespace sql3
         public bool charButtonClicked;
         public Text playerTalk;
 
+        public HUD hud;
+
         // Use this for initialization
         void Start()
         {
@@ -23,7 +25,7 @@ namespace sql3
         // Update is called once per frame
         void Update()
         {
-            
+
         }
 
         public void ClickCharButton()
@@ -31,6 +33,8 @@ namespace sql3
             playerTalk.text = "You are " + charNameInButton + ", a " + charClassInButton + ".";
 
             charButtonClicked = true;
+
+            
         }
     }
 }
