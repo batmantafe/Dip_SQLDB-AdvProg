@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 namespace sql3
 {
-    
-
     public class SQL3_Login : MonoBehaviour
     {
         [Header("Username Login Start Check")]
@@ -30,6 +28,7 @@ namespace sql3
         public bool charChosen;
         public string charChoice;
         public Text classTalk;
+        public GameObject icon;
 
         // Use this for initialization
         void Start()
@@ -63,6 +62,8 @@ namespace sql3
                 char3.SetActive(false);
 
                 playerTalk.text = "Login & Choose Your Character.";
+
+                icon.SetActive(false);
             }
 
             else
@@ -84,24 +85,26 @@ namespace sql3
                     char2.SetActive(false);
                     char3.SetActive(false);
 
+                    icon.SetActive(true);
+
                     switch (charChoice)
                     {
                         case "Warrior":
                             hud.playerIsWarrior = true;
 
-                            classTalk.text = "A Warrior has lots of Health, very little Mana, and some Stamina.";
+                            classTalk.text = "A Warrior has lots of Health, but very little Mana, and some Stamina.";
                             break;
 
                         case "Wizard":
                             hud.playerIsWizard = true;
 
-                            classTalk.text = "A Wizard has some Health, lots of Mana, and very little Stamina.";
+                            classTalk.text = "A Wizard has some Health, lots of Mana, but very little Stamina.";
                             break;
 
                         case "Rogue":
                             hud.playerIsRogue = true;
 
-                            classTalk.text = "A Rogue has very little Health, some Mana, and lots of Stamina.";
+                            classTalk.text = "A Rogue has very little Health, some Mana, but lots of Stamina.";
                             break;
                     }
                 }
