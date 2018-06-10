@@ -77,6 +77,10 @@ namespace sql3
                     mouseLookY.enabled = true;
                     movement.enabled = true;
                     hud.enabled = true;
+
+                    char1.SetActive(false);
+                    char2.SetActive(false);
+                    char3.SetActive(false);
                 }
             }
         }
