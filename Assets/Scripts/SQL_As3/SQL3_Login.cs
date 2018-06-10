@@ -30,6 +30,9 @@ namespace sql3
         public Text classTalk;
         public GameObject icon;
 
+        [Header("Quick Select")]
+        public QuickSelect quickSelect;
+
         // Use this for initialization
         void Start()
         {
@@ -64,6 +67,8 @@ namespace sql3
                 playerTalk.text = "Login & Choose Your Character.";
 
                 icon.SetActive(false);
+
+                quickSelect.enabled = false;
             }
 
             else
@@ -86,6 +91,8 @@ namespace sql3
                     char3.SetActive(false);
 
                     icon.SetActive(true);
+
+                    quickSelect.enabled = true;
 
                     switch (charChoice)
                     {
