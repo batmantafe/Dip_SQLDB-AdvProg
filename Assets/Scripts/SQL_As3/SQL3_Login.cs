@@ -32,6 +32,7 @@ namespace sql3
 
         [Header("Quick Select")]
         public QuickSelect quickSelect;
+        public GameObject playerMainInventory;
 
         // Use this for initialization
         void Start()
@@ -69,6 +70,8 @@ namespace sql3
                 icon.SetActive(false);
 
                 quickSelect.enabled = false;
+
+                playerMainInventory.SetActive(false);
             }
 
             else

@@ -101,8 +101,6 @@ namespace sql3
             medStat = 100;
             lowStat = 50;
 
-            
-
             // Set Health
             //healthMax = 100f;
             healthCurrent = healthMax;

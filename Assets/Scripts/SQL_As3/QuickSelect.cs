@@ -59,6 +59,7 @@ namespace sql3
 
         public Movement movement;
         public MouseLook mouseXLook, mouseYLook;
+        public Inventory3 inv3;
 
         void Start()
         {
@@ -74,7 +75,7 @@ namespace sql3
 
         void Update()
         {
-            if (Input.GetKey(KeyCode.Mouse1))
+            if (Input.GetKey(KeyCode.Mouse1) && !inv3.mainInvOn)
             {
                 scrH = Screen.height / 9;
                 scrW = Screen.width / 16;
