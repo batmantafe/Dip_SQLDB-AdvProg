@@ -15,6 +15,7 @@ namespace sql3
         public MouseLook mouseLookX, mouseLookY;
         public Movement movement;
         public HUD hud;
+        public Text playerTalk;
 
         [Header("Username SQL Check")]
         public InputField usernameInput;
@@ -27,7 +28,6 @@ namespace sql3
         public GameObject char1;
         public GameObject char2, char3;
         public bool charChosen;
-        public Text playerTalk;
 
         // Use this for initialization
         void Start()
@@ -42,6 +42,8 @@ namespace sql3
             UserNotLoggedIn();
 
             CheckUsername();
+
+            CheckCharChosen();
         }
 
         #region Is the User Logged In?
@@ -57,6 +59,8 @@ namespace sql3
                 char1.SetActive(false);
                 char2.SetActive(false);
                 char3.SetActive(false);
+
+                playerTalk.text = "Login & Choose Your Character.";
             }
 
             else
@@ -65,6 +69,8 @@ namespace sql3
                 char2.SetActive(true);
                 char3.SetActive(true);
 
+                usernameInput.gameObject.SetActive(false);
+
                 if (charChosen)
                 {
                     mouseLookX.enabled = true;
@@ -72,8 +78,6 @@ namespace sql3
                     movement.enabled = true;
                     hud.enabled = true;
                 }
-
-                usernameInput.gameObject.SetActive(false);
             }
         }
 
@@ -148,21 +152,13 @@ namespace sql3
             }
         }
 
-        public void ClickCharButton()
+        void CheckCharChosen()
         {
-            if (gameObject.name.Contains("Char1"))
+            if (char1.GetComponent<CharButtons>().charButtonClicked == true ||
+                char2.GetComponent<CharButtons>().charButtonClicked == true ||
+                char3.GetComponent<CharButtons>().charButtonClicked == true)
             {
-                playerTalk.text = "You are " + char1.GetComponent<CharButtons>().charNameInButton + ", a " + char1.GetComponent<CharButtons>().charClassInButton + ".";
-            }
-
-            if (gameObject.name.Contains("Char2"))
-            {
-                playerTalk.text = "You are " + char2.GetComponent<CharButtons>().charNameInButton + ", a " + char2.GetComponent<CharButtons>().charClassInButton + ".";
-            }
-
-            if (gameObject.name.Contains("Char3"))
-            {
-                playerTalk.text = "You are " + char3.GetComponent<CharButtons>().charNameInButton + ", a " + char3.GetComponent<CharButtons>().charClassInButton + ".";
+                charChosen = true;
             }
         }
         #endregion

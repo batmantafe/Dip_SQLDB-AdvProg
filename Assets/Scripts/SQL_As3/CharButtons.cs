@@ -10,18 +10,27 @@ namespace sql3
     {
         public string charNameInButton;
         public string charClassInButton;
+
         public bool charButtonClicked;
+        public Text playerTalk;
 
         // Use this for initialization
         void Start()
         {
-
+            charButtonClicked = false;
         }
 
         // Update is called once per frame
         void Update()
         {
+            
+        }
 
+        public void ClickCharButton()
+        {
+            playerTalk.text = "You are " + charNameInButton + ", a " + charClassInButton + ".";
+
+            charButtonClicked = true;
         }
     }
 }
