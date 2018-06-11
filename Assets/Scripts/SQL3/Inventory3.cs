@@ -6,11 +6,15 @@ namespace sql3
 {
     public class Inventory3 : MonoBehaviour
     {
+        [Header("Toggling Main Inv On/Off")]
         public bool mainInvOn;
         public QuickSelect quickSelect;
         public GameObject mainInv;
         public MouseLook mouseXLook, mouseYLook;
         public Movement movement;
+
+        [Header("Main Inv Items")]
+        public int[] mainInvItemsArray;
 
         // Use this for initialization
         void Start()

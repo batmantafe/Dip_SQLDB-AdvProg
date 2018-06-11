@@ -28,6 +28,7 @@ namespace sql3
         public float playerNormalSpeed;
         public float playerSlowSpeed;
         public QuickSelect quickSelect;
+        public Inventory3 inv3;
 
         [Header("Class Choice Stats")]
         public float highStat, medStat, lowStat;
@@ -159,11 +160,16 @@ namespace sql3
                 GetComponent<Movement>().speed = playerNormalSpeed;
             }
 
-            if (!quickSelect.showSelectMenu)
+            if (!quickSelect.showSelectMenu && !inv3.mainInvOn)
             {
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
                 {
                     stamCurrent = stamCurrent - (stamBurn * Time.deltaTime);
+                }
+
+                else
+                {
+                    stamCurrent = stamCurrent + (stamRegen * Time.deltaTime);
                 }
             }
 
