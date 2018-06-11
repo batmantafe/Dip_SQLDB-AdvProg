@@ -14,8 +14,9 @@ namespace sql3
         public Movement movement;
 
         [Header("Main Inv Items")]
-        public int[] playerInvItemsArray;
-        public int[] equipInvItemsArray, quickSelectInvItemsArray;
+        public int[] playerInvIntArray;
+        public int[] equipInvIntArray, quickSelectInvIntArray;
+        public GameObject[] playerInvGobjArray, equipInvGobjArray, quickSelectInvGobjArray;
 
         // Use this for initialization
         void Start()
