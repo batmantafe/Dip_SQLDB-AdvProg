@@ -44,13 +44,39 @@ namespace sql3
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                //Debug.Log("Pressed!");
-
                 for (int i = 0; i < playerInvGobjArray.Length; i++)
                 {
                     if (playerInvGobjArray[i].GetComponent<InvButtons>().buttonHasItem == false)
                     {
                         playerInvGobjArray[i].GetComponent<InvButtons>().buttonItemNumber = 1;
+                        playerInvGobjArray[i].GetComponent<InvButtons>().buttonHasItem = true;
+
+                        return;
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                for (int i = 0; i < playerInvGobjArray.Length; i++)
+                {
+                    if (playerInvGobjArray[i].GetComponent<InvButtons>().buttonHasItem == false)
+                    {
+                        playerInvGobjArray[i].GetComponent<InvButtons>().buttonItemNumber = 2;
+                        playerInvGobjArray[i].GetComponent<InvButtons>().buttonHasItem = true;
+
+                        return;
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                for (int i = 0; i < playerInvGobjArray.Length; i++)
+                {
+                    if (playerInvGobjArray[i].GetComponent<InvButtons>().buttonHasItem == false)
+                    {
+                        playerInvGobjArray[i].GetComponent<InvButtons>().buttonItemNumber = 3;
                         playerInvGobjArray[i].GetComponent<InvButtons>().buttonHasItem = true;
 
                         return;
