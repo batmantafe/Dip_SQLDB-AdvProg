@@ -137,5 +137,37 @@ namespace sql3
                 }
             }
         }
+
+        public void PlayerInvToQuickButton()
+        {
+            if (currentInvGobj != null & currentQuickSelectInvGobj != null)
+            {
+                if (currentInvGobj.GetComponent<InvButtons>().buttonHasItem == true &&
+                    currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonHasItem == false)
+                {
+                    currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonItemNumber = currentInvGobj.GetComponent<InvButtons>().buttonItemNumber;
+                    currentInvGobj.GetComponent<InvButtons>().buttonItemNumber = 0;
+
+                    currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonHasItem = true;
+                    currentInvGobj.GetComponent<InvButtons>().buttonHasItem = false;
+                }
+            }
+        }
+
+        public void QuickToPlayerInvButton()
+        {
+            if (currentInvGobj != null & currentEquipInvGobj != null)
+            {
+                if (currentInvGobj.GetComponent<InvButtons>().buttonHasItem == false &&
+                    currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonHasItem == true)
+                {
+                    currentInvGobj.GetComponent<InvButtons>().buttonItemNumber = currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonItemNumber;
+                    currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonItemNumber = 0;
+
+                    currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonHasItem = false;
+                    currentInvGobj.GetComponent<InvButtons>().buttonHasItem = true;
+                }
+            }
+        }
     }
 }
