@@ -18,6 +18,9 @@ namespace sql3
         public int[] equipInvIntArray, quickSelectInvIntArray;
         public GameObject[] playerInvGobjArray, equipInvGobjArray, quickSelectInvGobjArray;
 
+        [Header("Currently Selected Item")]
+        public GameObject currentInvGobj;
+
         // Use this for initialization
         void Start()
         {
