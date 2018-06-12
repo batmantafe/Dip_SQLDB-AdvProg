@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace sql3
 {
-    public class InvButtons : MonoBehaviour
+    public class EqpButtons : MonoBehaviour
     {
         public bool buttonHasItem;
         public int buttonItemNumber;
@@ -17,7 +17,7 @@ namespace sql3
         // Use this for initialization
         void Start()
         {
-
+           
         }
 
         // Update is called once per frame
@@ -29,9 +29,9 @@ namespace sql3
             }
         }
 
-        public void InvButtonClicked()
+        public void EquipButtonClicked()
         {
-            inv3.currentInvGobj = gameObject;
+            inv3.currentEquipInvGobj = gameObject;
         }
     }
 }

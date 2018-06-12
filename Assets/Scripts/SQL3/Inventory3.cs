@@ -20,6 +20,7 @@ namespace sql3
 
         [Header("Currently Selected Item")]
         public GameObject currentInvGobj;
+        public GameObject currentEquipInvGobj, currentQuickSelectInvGobj;
 
         // Use this for initialization
         void Start()
