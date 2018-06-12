@@ -17,7 +17,7 @@ namespace sql3
         // Use this for initialization
         void Start()
         {
-
+            
         }
 
         // Update is called once per frame
@@ -26,6 +26,11 @@ namespace sql3
             if (buttonHasItem)
             {
                 GetComponent<Image>().sprite = invStats.itemIcons[buttonItemNumber - 1];
+            }
+
+            else
+            {
+                GetComponent<Image>().sprite = inv3.defaultButtonSprite;
             }
         }
 

@@ -27,6 +27,11 @@ namespace sql3
             {
                 GetComponent<Image>().sprite = invStats.itemIcons[buttonItemNumber - 1];
             }
+
+            else
+            {
+                GetComponent<Image>().sprite = inv3.defaultButtonSprite;
+            }
         }
 
         public void EquipButtonClicked()

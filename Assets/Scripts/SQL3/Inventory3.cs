@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 namespace sql3
 {
     public class Inventory3 : MonoBehaviour
@@ -21,11 +23,13 @@ namespace sql3
         [Header("Currently Selected Item")]
         public GameObject currentInvGobj;
         public GameObject currentEquipInvGobj, currentQuickSelectInvGobj;
+        public GameObject defaultButton;
+        public Sprite defaultButtonSprite;
 
         // Use this for initialization
         void Start()
         {
-
+            defaultButtonSprite = defaultButton.GetComponent<Image>().sprite;
         }
 
         // Update is called once per frame
@@ -73,6 +77,38 @@ namespace sql3
                 movement.enabled = true;
                 mouseXLook.enabled = true;
                 mouseYLook.enabled = true;
+            }
+        }
+
+        public void PlayerInvToEquipButton()
+        {
+            if (currentInvGobj != null & currentEquipInvGobj != null)
+            {
+                if (currentInvGobj.GetComponent<InvButtons>().buttonHasItem == true &&
+                    currentEquipInvGobj.GetComponent<EqpButtons>().buttonHasItem == false)
+                {
+                    currentEquipInvGobj.GetComponent<EqpButtons>().buttonItemNumber = currentInvGobj.GetComponent<InvButtons>().buttonItemNumber;
+                    currentInvGobj.GetComponent<InvButtons>().buttonItemNumber = 0;
+
+                    currentEquipInvGobj.GetComponent<EqpButtons>().buttonHasItem = true;
+                    currentInvGobj.GetComponent<InvButtons>().buttonHasItem = false;
+                }
+            }
+        }
+
+        public void EquipToPlayerInvButton()
+        {
+            if (currentInvGobj != null & currentEquipInvGobj != null)
+            {
+                if (currentInvGobj.GetComponent<InvButtons>().buttonHasItem == false &&
+                    currentEquipInvGobj.GetComponent<EqpButtons>().buttonHasItem == true)
+                {
+                    currentInvGobj.GetComponent<InvButtons>().buttonItemNumber = currentEquipInvGobj.GetComponent<EqpButtons>().buttonItemNumber;
+                    currentEquipInvGobj.GetComponent<EqpButtons>().buttonItemNumber = 0;
+
+                    currentEquipInvGobj.GetComponent<EqpButtons>().buttonHasItem = false;
+                    currentInvGobj.GetComponent<InvButtons>().buttonHasItem = true;
+                }
             }
         }
     }
