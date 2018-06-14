@@ -26,6 +26,11 @@ namespace sql3
         public GameObject defaultButton;
         public Sprite defaultButtonSprite;
 
+        [Header("Chest Inventory")]
+        public bool playerAtLargeChest;
+        public bool playerAtMediumChest, playerAtSmallChest;
+        public GameObject chest1Button, chest2Button, chest3Button, chestToPlayerButton;
+
         // Use this for initialization
         void Start()
         {
@@ -41,6 +46,7 @@ namespace sql3
             }
 
             ShowMainInv();
+            ChestButtons();
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
@@ -106,6 +112,7 @@ namespace sql3
             }
         }
 
+        #region Player Move Items Inventory Buttons
         public void PlayerInvToEquipButton()
         {
             if (currentInvGobj != null & currentEquipInvGobj != null)
@@ -167,6 +174,53 @@ namespace sql3
                     currentQuickSelectInvGobj.GetComponent<QuickButtons>().buttonHasItem = false;
                     currentInvGobj.GetComponent<InvButtons>().buttonHasItem = true;
                 }
+            }
+        }
+        #endregion
+
+        void ChestButtons()
+        {
+            if (mainInvOn)
+            {
+                if (playerAtLargeChest)
+                {
+                    chest1Button.SetActive(true);
+                    chest2Button.SetActive(true);
+                    chest3Button.SetActive(true);
+                    chestToPlayerButton.SetActive(true);
+                }
+
+                if (playerAtMediumChest)
+                {
+                    chest1Button.SetActive(true);
+                    chest2Button.SetActive(true);
+                    //chest3Button.SetActive(true);
+                    chestToPlayerButton.SetActive(true);
+                }
+
+                if (playerAtSmallChest)
+                {
+                    chest1Button.SetActive(true);
+                    //chest2Button.SetActive(true);
+                    //chest3Button.SetActive(true);
+                    chestToPlayerButton.SetActive(true);
+                }
+
+                if (!playerAtLargeChest && !playerAtMediumChest && !playerAtSmallChest)
+                {
+                    chest1Button.SetActive(false);
+                    chest2Button.SetActive(false);
+                    chest3Button.SetActive(false);
+                    chestToPlayerButton.SetActive(false);
+                }
+            }
+
+            if (!mainInvOn)
+            {
+                chest1Button.SetActive(false);
+                chest2Button.SetActive(false);
+                chest3Button.SetActive(false);
+                chestToPlayerButton.SetActive(false);
             }
         }
     }
