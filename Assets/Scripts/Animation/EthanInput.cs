@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class EthanInput : MonoBehaviour
 {
+    [Header("Float Positions")]
     public float ethanMoveHorizontal;
     public float ethanMoveFwd;
+    public float ethanCurrentY;
+    public float ethanSetY;
+
+    [Header("Animator")]
     public Animator ethanAnim;
 
     // Use this for initialization
     void Start()
     {
-
+        ethanSetY = transform.position.y;
     }
 
     // Update is called once per frame
@@ -28,6 +33,8 @@ public class EthanInput : MonoBehaviour
 
         ethanAnim.SetFloat("EForward", ethanMoveFwd);
         ethanAnim.SetFloat("EHorizontal", ethanMoveHorizontal);
+
+        ethanAnim.SetFloat("EVerticalY", ethanCurrentY);
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -47,6 +54,14 @@ public class EthanInput : MonoBehaviour
             else
             {
                 ethanAnim.SetBool("isCrouching", true);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!ethanAnim.GetBool("isJumping"))
+            {
+                ethanAnim.SetBool("isJumping", true);
             }
         }
     }
