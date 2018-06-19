@@ -8,6 +8,7 @@ public class EthanInput : MonoBehaviour
     public float ethanMoveHorizontal;
     public float ethanMoveFwd;
     public float ethanCurrentY;
+    public float ethanJumpHeight;
     public float ethanSetY;
 
     [Header("Animator")]
@@ -16,7 +17,7 @@ public class EthanInput : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ethanSetY = transform.position.y;
+        ethanJumpHeight = 1;
     }
 
     // Update is called once per frame
@@ -34,6 +35,7 @@ public class EthanInput : MonoBehaviour
         ethanAnim.SetFloat("EForward", ethanMoveFwd);
         ethanAnim.SetFloat("EHorizontal", ethanMoveHorizontal);
 
+        ethanCurrentY = transform.position.y;
         ethanAnim.SetFloat("EVerticalY", ethanCurrentY);
 
         if (Input.GetKey(KeyCode.LeftShift))
@@ -61,8 +63,24 @@ public class EthanInput : MonoBehaviour
         {
             if (!ethanAnim.GetBool("isJumping"))
             {
+                ethanSetY = transform.position.y;
+
                 ethanAnim.SetBool("isJumping", true);
             }
         }
+
+        /*if (ethanCurrentY > ethanSetY + ethanJumpHeight)
+        {
+            ethanAnim.SetBool("isJumping", false);
+        }*/
     }
+
+    /*IEnumerator Jump()
+    {
+        ethanAnim.SetBool("isJumping", true);
+
+        yield return new WaitForSeconds(2);
+
+        ethanAnim.SetBool("isJumping", false);
+    }*/
 }
