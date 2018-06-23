@@ -45,7 +45,7 @@ namespace sql3
         // Update is called once per frame
         void Update()
         {
-            UserNotLoggedIn();
+            VerifyUserLogin();
 
             CheckUsername();
 
@@ -53,7 +53,7 @@ namespace sql3
         }
 
         #region Is the User Logged In?
-        void UserNotLoggedIn()
+        void VerifyUserLogin()
         {
             if (!userLoggedIn)
             {
